@@ -5,96 +5,41 @@ import HeroSlider from './HeroSlider.astro';
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-copy">
-      <p class="hero-eyebrow">Boutique holiday cottage</p>
-      <h1 class="hero-title">The Hen House</h1>
+      <div class="hero-lozenges" aria-label="Reviews">
+        <a href="https://www.airbnb.co.uk/rooms/1477403609287112139" class="hero-lozenge" target="_blank" rel="noopener noreferrer" aria-label="5 out of 5 on Airbnb">
+          <span class="hero-lozenge-icon">
+            <img src="/images/header_review/airbnb_ICON.jpeg" alt="" width="48" height="20" />
+          </span>
+          <span class="hero-lozenge-text">5 out of 5 on Airbnb</span>
+        </a>
+        <a href="https://www.booking.com/hotel/gb/the-hen-house-westmorland-and-furness.en-gb.html" class="hero-lozenge" target="_blank" rel="noopener noreferrer" aria-label="9.5 out of 10 on Booking.com">
+          <span class="hero-lozenge-icon">
+            <img src="/images/header_review/Booking-icon.png" alt="" width="48" height="20" />
+          </span>
+          <span class="hero-lozenge-text">9.5 out of 10 on Booking.com</span>
+        </a>
+      </div>
+      <h1 class="hero-title">THE HEN HOUSE</h1>
       <p class="hero-subtitle">
-        Slow living, big skies, and considered comfort in Cumbria.
+        A quiet, light-filled cottage near the M6 — ideal for weekend escapes or midweek resets. Expect cosy evenings, big skies, and the kind of calm that makes mornings feel unhurried.
       </p>
+      <a href="https://www.airbnb.co.uk/rooms/1477403609287112139" class="hero-cta" target="_blank" rel="noopener noreferrer">
+        See availability
+        <span class="hero-cta-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </span>
+      </a>
+      <p class="hero-meta">Cumbria, close to the M6</p>
     </div>
     <div class="hero-media">
       <div class="hero-gallery-wrapper">
-        <div class="hero-gallery">
-          <HeroSlider />
-        </div>
+        <HeroSlider />
       </div>
     </div>
   </div>
 </section>
-
-<style>
-  .hero {
-    padding: 2rem 1rem 3rem;
-  }
-
-  .hero-inner {
-    display: grid;
-    gap: 2rem;
-    max-width: 1120px;
-    margin: 0 auto;
-  }
-
-  @media (min-width: 768px) {
-    .hero-inner {
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 3rem;
-    }
-  }
-
-  .hero-copy {
-    max-width: 32ch;
-  }
-
-  .hero-eyebrow {
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-text-muted);
-    margin-bottom: 0.5rem;
-  }
-
-  .hero-title {
-    font-family: var(--font-serif);
-    font-size: 2.5rem;
-    font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: 0.75rem;
-  }
-
-  @media (min-width: 768px) {
-    .hero-title {
-      font-size: 3rem;
-    }
-  }
-
-  .hero-subtitle {
-    color: var(--color-text-muted);
-    font-size: 1rem;
-  }
-
-  .hero-media {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  @media (min-width: 768px) {
-    .hero-media {
-      justify-content: flex-end;
-    }
-  }
-
-  .hero-gallery-wrapper {
-    position: relative;
-    overflow: visible;
-    width: 100%;
-    max-width: min(420px, 90vw);
-  }
-
-  @media (min-width: 768px) {
-    .hero-gallery-wrapper {
-      max-width: 480px;
-    }
-  }
-</style>
