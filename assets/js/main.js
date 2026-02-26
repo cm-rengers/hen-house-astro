@@ -188,11 +188,12 @@
   function initHeroCardSlider() {
     var card = document.querySelector("[data-hero-card]");
     if (!card) return;
+    var track = card.querySelector(".hero-card-slides");
     var slides = card.querySelectorAll(".hero-card-slide");
     var prevBtn = card.querySelector("[data-hero-prev]");
     var nextBtn = card.querySelector("[data-hero-next]");
     var counterEl = card.querySelector("[data-hero-counter]");
-    if (!slides.length || !prevBtn || !nextBtn || !counterEl) return;
+    if (!track || !slides.length || !prevBtn || !nextBtn || !counterEl) return;
 
     var total = slides.length;
     var current = 0;
@@ -203,9 +204,8 @@
       if (index < 0) index = total - 1;
       if (index >= total) index = 0;
       current = index;
-      slides.forEach(function (slide, i) {
-        slide.classList.toggle("is-active", i === current);
-      });
+      var offset = (100 / total) * current;
+      track.style.transform = "translateX(-" + offset + "%)";
       if (counterEl) counterEl.textContent = (current + 1) + " / " + total;
     }
 
