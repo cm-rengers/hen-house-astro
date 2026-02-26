@@ -1,0 +1,100 @@
+---
+import HeroSlider from './HeroSlider.astro';
+---
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="hero-eyebrow">Boutique holiday cottage</p>
+      <h1 class="hero-title">The Hen House</h1>
+      <p class="hero-subtitle">
+        Slow living, big skies, and considered comfort in Cumbria.
+      </p>
+    </div>
+    <div class="hero-media">
+      <div class="hero-gallery-wrapper">
+        <div class="hero-gallery">
+          <HeroSlider />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .hero-inner {
+    display: grid;
+    gap: 2rem;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .hero-inner {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 3rem;
+    }
+  }
+
+  .hero-copy {
+    max-width: 32ch;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero-title {
+      font-size: 3rem;
+    }
+  }
+
+  .hero-subtitle {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+  }
+
+  .hero-media {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero-media {
+      justify-content: flex-end;
+    }
+  }
+
+  .hero-gallery-wrapper {
+    position: relative;
+    overflow: visible;
+    width: 100%;
+    max-width: min(420px, 90vw);
+  }
+
+  @media (min-width: 768px) {
+    .hero-gallery-wrapper {
+      max-width: 480px;
+    }
+  }
+</style>
