@@ -597,9 +597,8 @@ p {
   width: 100%;
 }
 
-/* Gallery wrapper – ONLY viewport + controls; positioning anchor for cut-out tile */
-.hero-gallery-wrapper,
-.hero-gallery {
+/* Gallery wrapper – viewport + controls; positioning anchor */
+.hero-gallery-wrapper {
   position: relative;
   overflow: visible;
   width: clamp(420px, 40vw, 680px);
@@ -607,54 +606,44 @@ p {
   margin: 0 auto;
 }
 
-/* Viewport: true square, ONLY clipped element; no rounded corners */
-.hero-gallery-viewport {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 0;
-  overflow: hidden;
-  background: transparent;
+/* HERO GALLERY CORE LAYOUT */
+.hero-gallery {
+  position: relative;
 }
 
-/* Hero gallery image – fills viewport */
+.hero-gallery-viewport {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
 .hero-slider-card {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 0;
   overflow: hidden;
   background: var(--color-surface-muted);
 }
 
-/* Controls – absolutely positioned relative to .hero-gallery, tile overlaps out of image */
 .hero-gallery-controls {
   position: absolute;
-  left: 22px;
-  bottom: -26px;
-  z-index: 50;
+  left: 16px;
+  bottom: -22px;
+  z-index: 9999;
   pointer-events: none;
 }
 
-/* Framer-style sliding track */
 .hero-card-slides {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 300%;
-  height: 100%;
   display: flex;
-  flex-direction: row;
-  transition: transform 0.5s ease-in-out;
+  height: 100%;
+  transition: transform 0.45s ease-in-out;
   user-select: none;
   touch-action: pan-y;
 }
 
 .hero-card-slide {
-  flex: 0 0 auto;
-  width: 33.333333%;
+  flex: 0 0 100%;
   height: 100%;
-  position: relative;
 }
 
 .hero-card-slide img {
@@ -662,12 +651,12 @@ p {
   height: 100%;
   object-fit: cover;
   display: block;
-  pointer-events: none;
 }
 
-/* Controls tile – cut-out corner; receives pointer events; no rounded corners */
+/* Controls tile – bottom-left; clickable, square corners */
 .hero-gallery-controls-tile {
   pointer-events: auto;
+  border-radius: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -677,7 +666,6 @@ p {
   padding: 0 18px;
   background: #fff;
   border: 1px solid var(--color-border);
-  border-radius: 0;
   box-shadow: 0 20px 55px rgba(0, 0, 0, 0.1);
 }
 
@@ -719,8 +707,8 @@ p {
   }
 
   .hero-gallery-controls {
-    left: 14px;
-    bottom: -18px;
+    left: 12px;
+    bottom: -20px;
   }
 }
 
@@ -1007,6 +995,25 @@ p {
 .gallery-item--br2 {
   grid-column: 3 / 4;
   grid-row: 3 / span 4;
+}
+
+/* Desktop: shorter top-left (chicken) so bottom image fits; shorter bottom-right tiles */
+@media (min-width: 1024px) {
+  .gallery-item--square {
+    grid-row: 1 / span 3;
+  }
+
+  .gallery-item--bottom-left {
+    grid-row: 4 / span 2;
+  }
+
+  .gallery-item--br1 {
+    grid-row: 3 / span 3;
+  }
+
+  .gallery-item--br2 {
+    grid-row: 3 / span 3;
+  }
 }
 
 /* Make sure images always fill their boxes */
@@ -1965,54 +1972,59 @@ p {
   overflow: visible !important;
 }
 
-/* The square */
+/* The square – only clip here */
 .hero-gallery-viewport {
-  position: relative !important;
-  width: 100% !important;
-  aspect-ratio: 1 / 1 !important;
-  overflow: hidden !important; /* only clip here */
-  border-radius: 0 !important; /* no rounded corners */
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
 }
 
-/* Everything inside fills the square via absolute positioning */
+/* Slider card fills viewport; no absolute – stable flex flow */
 .hero-slider-card {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  overflow: hidden !important;
-  border-radius: 0 !important;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   background: var(--color-surface-muted);
 }
 
+/* Track: flex row; width set by JS in %; no position: absolute */
 .hero-card-slides {
-  position: absolute !important;
-  inset: 0 !important;
-  height: 100% !important;
-  display: flex !important;
-  width: 300% !important;
+  display: flex;
+  height: 100%;
+  transition: transform 0.45s ease-in-out;
 }
 
 .hero-card-slide {
-  width: 33.333333% !important;
-  height: 100% !important;
+  flex: 0 0 100%;
+  height: 100%;
 }
 
 .hero-card-slide img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  border-radius: 0 !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* Controls tile: hidden – left/right toggle removed from gallery image */
+/* Controls: locked into bottom-left corner (Nordhjem), relative to .hero-gallery-wrapper */
 .hero-gallery-wrapper,
 .hero-gallery {
   position: relative !important;
+  overflow: visible !important;
 }
 
 .hero-gallery-controls {
-  display: none !important;
+  position: absolute !important;
+  left: 16px !important;
+  bottom: -22px !important;
+  z-index: 9999 !important;
+  pointer-events: none;
+}
+
+.hero-gallery-controls-tile {
+  pointer-events: auto;
+  border-radius: 0;
 }
 
 /* Desktop: align gallery right (kill the centring) */
@@ -2029,7 +2041,7 @@ p {
   }
 }
 
-/* Mobile: keep sensible width so it doesn't overflow */
+/* Mobile: sensible width; controls stay locked bottom-left */
 @media (max-width: 767px) {
   .hero-gallery-wrapper,
   .hero-gallery {
@@ -2039,8 +2051,8 @@ p {
   }
 
   .hero-gallery-controls {
-    left: 14px !important;
-    bottom: -22px !important;
+    left: 12px !important;
+    bottom: -20px !important;
   }
 }
 

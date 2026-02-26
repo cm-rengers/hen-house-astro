@@ -188,25 +188,40 @@
   function initHeroCardSlider() {
     var card = document.querySelector("[data-hero-card]");
     if (!card) return;
-    var track = card.querySelector(".hero-card-slides");
-    var slides = card.querySelectorAll(".hero-card-slide");
+    var track = card.querySelector("[data-hero-track]");
     var prevBtn = card.querySelector("[data-hero-prev]");
     var nextBtn = card.querySelector("[data-hero-next]");
     var counterEl = card.querySelector("[data-hero-counter]");
-    if (!track || !slides.length || !prevBtn || !nextBtn || !counterEl) return;
+    if (!track || !prevBtn || !nextBtn || !counterEl) return;
 
+    var slides = track.querySelectorAll(".hero-card-slide");
     var total = slides.length;
+    if (!total) return;
+
+    track.style.width = (total * 100) + "%";
+    for (var i = 0; i < slides.length; i++) {
+      slides[i].style.flex = "0 0 100%";
+      slides[i].style.width = "100%";
+    }
+
     var current = 0;
     var autoplayMs = 5000;
     var autoplayTimer = null;
+
+    function updateTransform(animate) {
+      var step = 100 / total; // % of the track to move per slide
+      track.style.transition = animate !== false
+        ? "transform 0.45s ease-in-out"
+        : "none";
+      track.style.transform = "translateX(-" + (current * step) + "%)";
+    }
 
     function goTo(index) {
       if (index < 0) index = total - 1;
       if (index >= total) index = 0;
       current = index;
-      var offset = (100 / total) * current;
-      track.style.transform = "translateX(-" + offset + "%)";
-      if (counterEl) counterEl.textContent = (current + 1) + " / " + total;
+      updateTransform(true);
+      counterEl.textContent = current + 1 + " / " + total;
     }
 
     function startAutoplay() {
@@ -256,6 +271,8 @@
       },
       { passive: true }
     );
+
+    updateTransform(false);
 
     startAutoplay();
   }
