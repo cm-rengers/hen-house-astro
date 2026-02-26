@@ -1,0 +1,35 @@
+---
+// Sticky header: left logo, center nav, primary + secondary CTA. Primary = Airbnb, secondary = Booking.com.
+---
+
+<header class="site-header" id="site-header">
+  <div class="site-header-inner">
+    <a href="/" class="site-header-logo">THE HEN HOUSE</a>
+    <nav class="site-header-nav" aria-label="Main">
+      <a href="#gallery" class="site-header-link">Gallery</a>
+      <a href="#facilities" class="site-header-link">Facilities</a>
+      <a href="#location" class="site-header-link">Location</a>
+      <a href="#book" class="site-header-link">Book</a>
+    </nav>
+    <div class="site-header-ctas">
+      <a href="https://www.booking.com/hotel/gb/the-hen-house-westmorland-and-furness.en-gb.html" class="site-header-cta site-header-cta-secondary" target="_blank" rel="noopener noreferrer">Booking.com</a>
+      <a href="https://www.airbnb.co.uk/rooms/1477403609287112139" class="site-header-cta" target="_blank" rel="noopener noreferrer">Book now</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  (function () {
+    const header = document.getElementById('site-header');
+    if (!header) return;
+    function updateScroll() {
+      if (window.scrollY > 8) {
+        header.classList.add('is-scrolled');
+      } else {
+        header.classList.remove('is-scrolled');
+      }
+    }
+    window.addEventListener('scroll', updateScroll, { passive: true });
+    updateScroll();
+  })();
+</script>
