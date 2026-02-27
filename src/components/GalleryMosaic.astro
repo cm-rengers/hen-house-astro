@@ -1,0 +1,439 @@
+---
+export interface Props {
+  heading?: string;
+  subheading?: string;
+}
+
+const { heading = "Gallery", subheading = "A glimpse of the Hen House and Cumbria." } = Astro.props;
+
+const images = [
+  { src: "/images/gallery/gallery_1.jpg", alt: "Chicken", objectPosition: "45% center" },
+  { src: "/images/gallery/gallery_4.jpg", alt: "Woodland pool", objectPosition: "center 38%" },
+  { src: "/images/gallery/gallery_5.jpg", alt: "Sailing on Windermere", objectPosition: "center 55%" },
+  { src: "/images/gallery/gallery_2.jpg", alt: "Sheep", objectPosition: "center 50%" },
+  { src: "/images/gallery/gallery_3.jpg", alt: "Jetty", objectPosition: "center 30%" },
+];
+---
+
+<section class="gallery-section" id="gallery">
+  <div class="gallery-header">
+    <h2 class="gallery-heading">{heading}</h2>
+    <p class="gallery-subheading">{subheading}</p>
+  </div>
+  <div class="mosaic">
+    <div class="mosaic-left">
+      <button type="button" class="mosaic-cell mosaic-cell-chicken" data-index="0" aria-label="Open lightbox">
+        <span class="mosaic-cell-inner">
+          <img src={images[0].src} alt={images[0].alt} width="400" height="620" style={`object-position: ${images[0].objectPosition}`} />
+          <span class="mosaic-overlay" aria-hidden="true">
+            <span class="mosaic-icon">↗</span>
+          </span>
+        </span>
+      </button>
+    </div>
+    <div class="mosaic-right">
+      <button type="button" class="mosaic-cell cell-pool" data-index="1" aria-label="Open lightbox">
+        <span class="mosaic-cell-inner">
+          <img src={images[1].src} alt={images[1].alt} width="600" height="240" style={`object-position: ${images[1].objectPosition}`} />
+          <span class="mosaic-overlay" aria-hidden="true">
+            <span class="mosaic-icon">↗</span>
+          </span>
+        </span>
+      </button>
+      <button type="button" class="mosaic-cell cell-sailboat" data-index="2" aria-label="Open lightbox">
+        <span class="mosaic-cell-inner">
+          <img src={images[2].src} alt={images[2].alt} width="600" height="200" style={`object-position: ${images[2].objectPosition}`} />
+          <span class="mosaic-overlay" aria-hidden="true">
+            <span class="mosaic-icon">↗</span>
+          </span>
+        </span>
+      </button>
+      <div class="mosaic-right-bottom">
+        <button type="button" class="mosaic-cell mosaic-cell-sheep" data-index="3" aria-label="Open lightbox">
+          <span class="mosaic-cell-inner">
+            <img src={images[3].src} alt={images[3].alt} width="280" height="168" style={`object-position: ${images[3].objectPosition}`} />
+            <span class="mosaic-overlay" aria-hidden="true">
+              <span class="mosaic-icon">↗</span>
+            </span>
+          </span>
+        </button>
+        <button type="button" class="mosaic-cell mosaic-cell-jetty" data-index="4" aria-label="Open lightbox">
+          <span class="mosaic-cell-inner">
+            <img src={images[4].src} alt={images[4].alt} width="280" height="168" style={`object-position: ${images[4].objectPosition}`} />
+            <span class="mosaic-overlay" aria-hidden="true">
+              <span class="mosaic-icon">↗</span>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="galleryLightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image gallery">
+  <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close">×</button>
+  <button type="button" class="lightbox-prev" id="lightboxPrev" aria-label="Previous">‹</button>
+  <button type="button" class="lightbox-next" id="lightboxNext" aria-label="Next">›</button>
+  <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+  <div class="lightbox-content">
+    <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+  </div>
+  <div class="lightbox-footer">
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+    <p class="lightbox-counter" id="lightboxCounter">1 / 5</p>
+  </div>
+</div>
+
+<style>
+  .gallery-section {
+    padding: 3rem 1.5rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .gallery-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .gallery-heading {
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin: 0 0 0.5rem;
+    color: #1a1a1a;
+  }
+
+  .gallery-subheading {
+    font-size: 1rem;
+    color: #555;
+    margin: 0;
+    max-width: 36em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .mosaic {
+    display: grid;
+    grid-template-columns: 1fr 1.38fr;
+    height: 620px;
+    gap: 8px;
+  }
+
+  .mosaic-left {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .mosaic-right {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+  }
+
+  .mosaic-cell {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    min-height: 0;
+  }
+
+  .mosaic-cell-chicken {
+    height: 100%;
+  }
+
+  .cell-pool {
+    flex: 1.1;
+  }
+
+  .cell-sailboat {
+    flex: 0.9;
+  }
+
+  .mosaic-right-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex: 0 0 168px;
+    gap: 8px;
+    min-height: 0;
+  }
+
+  .mosaic-cell-inner {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mosaic-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .mosaic-cell:hover img {
+    transform: scale(1.05);
+  }
+
+  .mosaic-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 12px;
+  }
+
+  .mosaic-cell:hover .mosaic-overlay {
+    opacity: 1;
+  }
+
+  .mosaic-icon {
+    font-size: 1.25rem;
+    color: #fff;
+    opacity: 0;
+    transform: translate(4px, 4px);
+    transition: opacity 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .mosaic-cell:hover .mosaic-icon {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(8, 8, 8, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .lightbox.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.2s ease;
+  }
+
+  .lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .lightbox-prev,
+  .lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .lightbox-prev {
+    left: 24px;
+  }
+
+  .lightbox-next {
+    right: 24px;
+  }
+
+  .lightbox-prev:hover,
+  .lightbox-next:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .lightbox-content {
+    position: relative;
+    z-index: 1;
+    max-width: 90vw;
+    max-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-img {
+    max-width: 100%;
+    max-height: 75vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .lightbox-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem 2rem 2rem;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .lightbox-caption {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    margin: 0 0 0.25rem;
+  }
+
+  .lightbox-counter {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    margin: 0;
+  }
+</style>
+
+<script is:inline>
+(function () {
+  const lightbox = document.getElementById('galleryLightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  const lightboxCounter = document.getElementById('lightboxCounter');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+  const lightboxBackdrop = document.getElementById('lightboxBackdrop');
+
+  const images = [
+    { src: '/images/gallery/gallery_1.jpg', alt: 'Chicken' },
+    { src: '/images/gallery/gallery_4.jpg', alt: 'Woodland pool' },
+    { src: '/images/gallery/gallery_5.jpg', alt: 'Sailing on Windermere' },
+    { src: '/images/gallery/gallery_2.jpg', alt: 'Sheep' },
+    { src: '/images/gallery/gallery_3.jpg', alt: 'Jetty' },
+  ];
+  const total = images.length;
+  let current = 0;
+
+  function openLightbox(index) {
+    current = (index + total) % total;
+    lightbox.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    updateLightboxContent();
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  function updateLightboxContent() {
+    const img = images[current];
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightboxCaption.textContent = img.alt;
+    lightboxCounter.textContent = (current + 1) + ' / ' + total;
+  }
+
+  function goPrev() {
+    current = (current - 1 + total) % total;
+    updateLightboxContent();
+  }
+
+  function goNext() {
+    current = (current + 1) % total;
+    updateLightboxContent();
+  }
+
+  document.querySelectorAll('.mosaic-cell[data-index]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      openLightbox(parseInt(btn.getAttribute('data-index'), 10));
+    });
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightboxBackdrop.addEventListener('click', closeLightbox);
+  lightboxPrev.addEventListener('click', goPrev);
+  lightboxNext.addEventListener('click', goNext);
+
+  var lightboxContent = lightbox.querySelector('.lightbox-content');
+  if (lightboxContent) {
+    lightboxContent.addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (!lightbox.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') goPrev();
+    if (e.key === 'ArrowRight') goNext();
+  });
+
+  var touchStartX = 0;
+  var touchEndX = 0;
+  lightbox.addEventListener('touchstart', function (e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+  lightbox.addEventListener('touchend', function (e) {
+    touchEndX = e.changedTouches[0].screenX;
+    var diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) goNext();
+      else goPrev();
+    }
+  }, { passive: true });
+})();
+</script>
