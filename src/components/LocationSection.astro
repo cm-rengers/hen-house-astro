@@ -1,0 +1,218 @@
+---
+// LocationSection.astro
+// Two-column layout: text left | map right. Uses Leaflet + OpenStreetMap (no API key).
+const LAT = 54.272568150273486;
+const LNG = -2.6993439971149558;
+---
+
+<section id="location" class="location-section">
+
+  <!-- LEFT -->
+  <div class="text-panel">
+    <h2 class="location-title">Idyllic<br>location</h2>
+    <p class="location-desc">
+      Nestled in the heart of Cumbria, this rural retreat offers easy
+      access to nature trails, nearby villages, and stunning panoramic
+      views right from your doorstep.
+    </p>
+    <a
+      class="open-maps-btn"
+      href="https://maps.app.goo.gl/3ki41XdemP3EbXM58"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Open maps
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 11a3 3 0 1 0 6 0 3 3 0 0 0-6 0z"/>
+        <path d="M17.657 16.657 13.414 20.9a2 2 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="map-panel">
+    <div id="location-map"></div>
+  </div>
+
+</section>
+
+<script is:inline define:vars={{ LAT, LNG }}>
+  function initLocationMap() {
+    var mapEl = document.getElementById('location-map');
+    if (!mapEl) return;
+    if (typeof L === 'undefined') {
+      setTimeout(initLocationMap, 50);
+      return;
+    }
+
+    var map = L.map('location-map', {
+      center: [LAT, LNG],
+      zoom: 13,
+      zoomControl: true,
+      scrollWheelZoom: false,
+      attributionControl: true,
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19,
+    }).addTo(map);
+
+    var henPath = 'M90.46,19.66s0,0,0,0a.27.27,0,0,0,0,0c-.06-.66-.72-1.26-1.13-1.72s-1-.87-1.34-1.36c-.75-1-.78-2.13-1.25-3.22a5.63,5.63,0,0,0-2-2.21.27.27,0,0,0,.37-.2,5.34,5.34,0,0,0,.11-.9c.3,0,.66.42,1,.85a.29.29,0,0,0,0,.39.39.39,0,0,1,0,.52c-.27.28.16.7.42.42a1,1,0,0,0,.2-.3l0,.06a5.93,5.93,0,0,1,.61,2.54.3.3,0,0,0,.6,0,7.71,7.71,0,0,0-1.63-4.62,2.14,2.14,0,0,0-1-.59c-.24-.11-.37-.07-.45,0a.32.32,0,0,0-.27,0c-.05-.16-.13-.42-.24-.82a.3.3,0,0,0-.37-.21c-.78.22-1.6-1.67-2.5-1.84-.5-.09-.52.41-1.17.15s-.24-.59-.72-.9C78.28,4.75,76.85,7.52,76.2,9,72,10.28,68.06,14.5,66,17.49c-2.19,3.17-3.22,6.77-4.83,10.2a.26.26,0,0,0-.17.19l-.07.32-.09.18a11.6,11.6,0,0,1-4,4.94,21.4,21.4,0,0,1-6.28,2.11,32.09,32.09,0,0,1-15.33-.24,15.78,15.78,0,0,1-5.12-1.94c-1.45-1-2.74-2.23-4.11-3.34A12.72,12.72,0,0,0,23,28c-1.45-.61-2.91-1.81-4.49-2a11.62,11.62,0,0,0-3.34.23.3.3,0,0,0-.34.06c-.81.15-1.6.31-2.34.4a.3.3,0,0,0-.21.51,6.64,6.64,0,0,1,.47.57c.35.46.49.21.27.41s-1.07.12-1.35.15a.3.3,0,0,0-.26.45,5.86,5.86,0,0,1,.4,1.19.33.33,0,0,0,.05.47c0,.61-.35,1.09-.37,1.66,0,.93.32,1.07-.88,1.29-.23,0-.48-.18-.72-.06-1.63.84,3,5.38,3.52,6A9.08,9.08,0,0,1,15,42.79a.27.27,0,0,0,.08.42h0c.19.85.34,1.72.54,2.6a46.09,46.09,0,0,0,1.74,6A31.13,31.13,0,0,0,23,61.53c-1.79,6.62,3.83,11.94,9.15,14.8,1.59.86,3.23,1.6,4.83,2.45a12.27,12.27,0,0,0,4.27,1.75,8,8,0,0,0,1.7,0c2.52,3.52,1.37,8.93,6,10.86,1.79.74,4.52-.06,6.08,1a3.08,3.08,0,0,1,.6.66.29.29,0,0,0,.14.24.46.46,0,0,1,0,.37c.15-.31-1.84-.14-2.23-.12-1.28.05-2.56.13-3.83.16a3.55,3.55,0,0,1-1.68-.1c-.27-.14-.34-.44-.51-.52-1.12-.5-1.91.52-3,.41-.66-.06-.42,0-.49-.77s-.1-1.38-.17-2.07c-.1-1-.15-2.1-.3-3.14,0-.11,0-.21-.05-.31a.26.26,0,0,0,.11-.17,2.4,2.4,0,0,0-.18-1.61.25.25,0,0,0-.37-.11c-.05-.17-.1-.34-.16-.5a.3.3,0,0,0,.19-.43,3.31,3.31,0,0,1-.41-1.53.3.3,0,0,0-.6,0h0a24.72,24.72,0,0,0-1.24-2.22c-.2-.33-.72,0-.52.3a22,22,0,0,1,3,13.07.3.3,0,0,0,.3.3c.89-.12,1.91-.82,2.78-.76s.68.46,1.27.76c1,.51,3.51-.06,4.62-.11a28,28,0,0,1,3.82-.07.3.3,0,0,0,.29-.38c-.05-.14-.1-.28-.16-.4,1.53,0,3.06.1,4.59.1a.27.27,0,0,0,.23-.12.26.26,0,0,0,.06-.26,2.48,2.48,0,0,0-1.73-2,36.13,36.13,0,0,0-6.19-1.18c-5.16-.73-5.31-6.45-7.9-9.92,1-.27,1.94-.6,2.81-.88,7.11-2.28,13.19-6.64,19.27-10.83q.58-.4,1.12-.81a.3.3,0,0,0,.2-.16c5.2-4.06,8.32-9.55,10-16,1.16-4.49,1.3-9.37,1.66-14,.18-2.34,0-4.62,0-7,.05-.16.11-.33.17-.49a2.59,2.59,0,0,0,.25-1.26.31.31,0,0,0-.36-.28,35.77,35.77,0,0,1,1.1-6,9.68,9.68,0,0,1,3-3.54c1.3-.79,4,1,5.55,1.22h.13A.27.27,0,0,0,90.46,19.66Z';
+
+    var iconHtml = '<div class="custom-marker">' +
+      '<div class="marker-ring"><div class="marker-inner">' +
+      '<svg width="33" height="33" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
+      '<path fill="#f0ece4" d="' + henPath + '"/>' +
+      '</svg></div></div>' +
+      '<div class="marker-tail"></div></div>';
+
+    var icon = L.divIcon({
+      className: '',
+      html: iconHtml,
+      iconSize: [72, 88],
+      iconAnchor: [36, 88],
+    });
+
+    L.marker([LAT, LNG], { icon: icon }).addTo(map);
+
+    setTimeout(function () {
+      map.invalidateSize();
+    }, 100);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLocationMap);
+  } else {
+    initLocationMap();
+  }
+</script>
+
+<style>
+  .location-section {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 38% 62%;
+  }
+
+  .text-panel {
+    background: #f0ece4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5rem 4rem 5rem 5rem;
+    gap: 1.75rem;
+  }
+
+  .location-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2.4rem, 4vw, 3.9rem);
+    font-weight: 600;
+    color: #1a1a16;
+    line-height: 1.06;
+  }
+
+  .location-desc {
+    font-weight: 300;
+    color: #6b6558;
+    font-size: .96rem;
+    line-height: 1.75;
+    max-width: 28rem;
+  }
+
+  .open-maps-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    padding: .75rem 1.5rem;
+    border: 1.5px solid #1a1a16;
+    border-radius: 999px;
+    font-family: 'Jost', system-ui, sans-serif;
+    font-size: .86rem;
+    color: #1a1a16;
+    text-decoration: none;
+    width: fit-content;
+    background: transparent;
+    transition: background .2s, color .2s;
+  }
+
+  .open-maps-btn:hover {
+    background: #1a1a16;
+    color: #f0ece4;
+  }
+
+  .open-maps-btn svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
+
+  #location-map {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+  }
+
+  .map-panel {
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+  }
+
+  /* Leaflet injects these at runtime — use :global() so scoped CSS applies */
+  :global(.leaflet-tile-pane) {
+    filter: grayscale(1) contrast(0.85) brightness(1.1);
+  }
+
+  :global(.custom-marker) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  :global(.marker-ring) {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #1a1a16;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+  }
+
+  :global(.marker-inner) {
+    width: 57px;
+    height: 57px;
+    border-radius: 50%;
+    background: #b8965a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.marker-tail) {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 16px solid #1a1a16;
+  }
+
+  @media (max-width: 768px) {
+    .location-section {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 65vw;
+      height: auto;
+    }
+
+    .text-panel {
+      padding: 3.5rem 2rem;
+    }
+
+    #location-map {
+      height: 65vw;
+    }
+  }
+</style>
