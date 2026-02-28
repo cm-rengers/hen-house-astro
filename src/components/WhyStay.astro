@@ -1,0 +1,323 @@
+---
+const topPerks = [
+  { title: "Perfect stop-off point", desc: "Whether you're heading up to Scotland or exploring the north, The Hen House makes a wonderful place to pause, rest and recharge.", icon: "compass" },
+  { title: "Right off the M6", desc: "Just minutes from junction, the property is effortless to find and reach — no winding country lanes or complicated directions.", icon: "m6" },
+  { title: "A lovely country setting", desc: "Sitting on the edge of the Lake District, you'll wake up surrounded by open fields, fresh air and the kind of quiet that city life forgets.", icon: "hills" },
+  { title: "Lakes & Dales on your doorstep", desc: "Positioned between two of England's most beloved landscapes, you're never more than a short drive from dramatic fells or rolling dales.", icon: "peaks" },
+  { title: "Use of a fenced paddock", desc: "Guests have exclusive use of a fully fenced paddock — perfect for children to run free, or for those travelling with dogs.", icon: "fence" },
+  { title: "Dogs very welcome", desc: "Four-legged friends are warmly welcomed at The Hen House. With the paddock, countryside walks and open space, they'll love it as much as you do.", icon: "dog" },
+];
+const bottomPerks = [
+  { title: "Electric car charger", desc: "An EV charger is available on site, so you can top up overnight and head out in the morning with a full charge. Available at an additional cost.", icon: "ev", tag: "Additional charge" },
+  { title: "Long stay & corporate rates", desc: "Planning an extended stay or travelling for work? Get in touch directly for the best rates on long stays and corporate bookings.", icon: "briefcase" },
+];
+---
+
+<section class="why-stay" id="stay">
+  <div class="why-stay-header">
+    <span class="why-stay-eyebrow">Why The Hen House</span>
+    <h2 class="why-stay-title">More than just<br /><em>a place to stay</em></h2>
+    <p class="why-stay-intro">Tucked on the edge of the Lakes, The Hen House is perfectly placed for travellers heading north — and impossible to leave in a hurry.</p>
+  </div>
+
+  <div class="why-stay-divider" aria-hidden="true"><span class="why-stay-dot"></span></div>
+
+  <div class="perks-grid">
+    {topPerks.map((perk, i) => (
+      <div class="perk" data-perk-index={i}>
+        <div class="perk-icon">
+          {perk.icon === "compass" && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="9" />
+              <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+              <path d="M12 3 L12 5" />
+              <path d="M12 19 L12 21" />
+              <path d="M3 12 L5 12" />
+              <path d="M19 12 L21 12" />
+              <path d="M15 9 L12 10.5 L9 15 L12 13.5 L15 9Z" fill="currentColor" stroke="none" />
+            </svg>
+          )}
+          {perk.icon === "m6" && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+              <line x1="6" y1="2" x2="6" y2="22" />
+              <line x1="18" y1="2" x2="18" y2="22" />
+              <line x1="12" y1="2" x2="12" y2="6" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="16" x2="12" y2="20" />
+            </svg>
+          )}
+          {perk.icon === "hills" && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 18 Q6 10 10 14 Q13 18 16 12 Q19 6 22 10" />
+              <line x1="2" y1="18" x2="22" y2="18" />
+              <circle cx="18" cy="6" r="2.5" />
+              <line x1="18" y1="2" x2="18" y2="3.2" />
+              <line x1="18" y1="8.8" x2="18" y2="10" />
+              <line x1="14" y1="6" x2="15.2" y2="6" />
+              <line x1="20.8" y1="6" x2="22" y2="6" />
+            </svg>
+          )}
+          {perk.icon === "peaks" && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 20 L8 8 L12 14 L16 6 L22 20 Z" />
+              <path d="M8 8 L6.5 11 L9.5 11 Z" fill="currentColor" stroke="none" />
+              <path d="M16 6 L14.5 10 L17.5 10 Z" fill="currentColor" stroke="none" />
+            </svg>
+          )}
+          {perk.icon === "fence" && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+              <line x1="3" y1="8" x2="3" y2="20" />
+              <line x1="10" y1="8" x2="10" y2="20" />
+              <line x1="17" y1="8" x2="17" y2="20" />
+              <line x1="3" y1="11" x2="17" y2="11" />
+              <line x1="3" y1="16" x2="17" y2="16" />
+              <line x1="17" y1="8" x2="21" y2="10" />
+              <line x1="17" y1="14" x2="21" y2="14" />
+              <line x1="21" y1="10" x2="21" y2="14" />
+              <line x1="2" y1="20" x2="22" y2="20" />
+            </svg>
+          )}
+          {perk.icon === "dog" && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 10 Q5 5 12 5 Q19 5 19 10 Q19 17 12 17 Q5 17 5 10 Z" />
+              <path d="M5 10 Q3 7 4 4 Q5 6 7 8" />
+              <path d="M19 10 Q21 7 20 4 Q19 6 17 8" />
+              <circle cx="9" cy="10" r="1" fill="currentColor" stroke="none" />
+              <circle cx="15" cy="10" r="1" fill="currentColor" stroke="none" />
+              <ellipse cx="12" cy="13" rx="2" ry="1.2" fill="none" />
+              <path d="M17 14 Q21 13 22 10" />
+            </svg>
+          )}
+        </div>
+        <div class="perk-body">
+          <h3 class="perk-title">{perk.title}</h3>
+          <p class="perk-desc">{perk.desc}</p>
+          {perk.tag ? <span class="perk-tag">{perk.tag}</span> : null}
+        </div>
+      </div>
+    ))}
+    <div class="perks-bottom">
+      {bottomPerks.map((perk, i) => (
+        <div class="perk" data-perk-index={6 + i}>
+          <div class="perk-icon">
+            {perk.icon === "ev" && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="4" width="11" height="14" rx="1.5" />
+                <rect x="6" y="6.5" width="7" height="4.5" rx="0.8" />
+                <path d="M9.5 7.5 L8.5 9.5 L9.5 9.5 L8 11.5 L11 9 L9.8 9 Z" fill="currentColor" stroke="none" />
+                <path d="M15 11 Q19 11 19 15" />
+                <rect x="17" y="15" width="4" height="5" rx="1" />
+                <line x1="18.5" y1="13.5" x2="18.5" y2="15" />
+                <line x1="20.5" y1="13.5" x2="20.5" y2="15" />
+              </svg>
+            )}
+            {perk.icon === "briefcase" && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="8" width="18" height="13" rx="1.5" />
+                <path d="M9 8 L9 5 Q9 3 12 3 Q15 3 15 5 L15 8" />
+                <line x1="12" y1="8" x2="12" y2="21" />
+                <line x1="3" y1="14.5" x2="21" y2="14.5" />
+              </svg>
+            )}
+          </div>
+          <div class="perk-body">
+            <h3 class="perk-title">{perk.title}</h3>
+            <p class="perk-desc">{perk.desc}</p>
+            {perk.tag ? <span class="perk-tag">{perk.tag}</span> : null}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .why-stay {
+    background: #ffffff;
+    padding: 52px 24px 64px;
+  }
+
+  .why-stay-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .why-stay-eyebrow {
+    font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #6b7280;
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .why-stay-title {
+    font-family: var(--font-serif, 'Playfair Display', Georgia, serif);
+    font-weight: 700;
+    font-size: clamp(36px, 5vw, 52px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: #111111;
+    margin: 0 0 18px;
+  }
+
+  .why-stay-title em {
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  .why-stay-intro {
+    font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #6b7280;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+
+  .why-stay-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+
+  .why-stay-divider::before,
+  .why-stay-divider::after {
+    content: '';
+    height: 1px;
+    width: 60px;
+    background: #e5e7eb;
+  }
+
+  .why-stay-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #6b7280;
+    opacity: 0.5;
+  }
+
+  .perks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #e5e7eb;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    overflow: hidden;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .perk {
+    background: #ffffff;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    transition: background 0.25s ease;
+    opacity: 0;
+    animation: whyStayFadeUp 0.5s ease forwards;
+  }
+
+  .perk:hover {
+    background: #f7f7f7;
+  }
+
+  .perk[data-perk-index="0"] { animation-delay: 0.05s; }
+  .perk[data-perk-index="1"] { animation-delay: 0.11s; }
+  .perk[data-perk-index="2"] { animation-delay: 0.17s; }
+  .perk[data-perk-index="3"] { animation-delay: 0.23s; }
+  .perk[data-perk-index="4"] { animation-delay: 0.29s; }
+  .perk[data-perk-index="5"] { animation-delay: 0.35s; }
+  .perk[data-perk-index="6"] { animation-delay: 0.41s; }
+  .perk[data-perk-index="7"] { animation-delay: 0.47s; }
+
+  .perks-bottom {
+    grid-column: span 3;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: #e5e7eb;
+  }
+
+  .perk-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    color: #111111;
+  }
+
+  .perk-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .perk-title {
+    font-family: var(--font-serif, 'Playfair Display', Georgia, serif);
+    font-weight: 600;
+    font-size: 18px;
+    color: #111111;
+    margin: 0 0 8px;
+    line-height: 1.25;
+  }
+
+  .perk-desc {
+    font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
+    font-weight: 400;
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .perk-tag {
+    display: inline-block;
+    font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #6b7280;
+    border: 1px solid #e5e7eb;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-top: 4px;
+    align-self: flex-start;
+  }
+
+  @keyframes whyStayFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .why-stay {
+      padding: 40px 16px 48px;
+    }
+
+    .perks-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .perks-bottom {
+      grid-column: span 1;
+      grid-template-columns: 1fr;
+    }
+
+    .perk {
+      padding: 32px 24px;
+    }
+  }
+</style>
