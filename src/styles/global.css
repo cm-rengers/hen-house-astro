@@ -17,7 +17,8 @@ html {
 [id="stay"],
 [id="facilities"],
 [id="location"],
-[id="book"] {
+[id="book"],
+[id="faq"] {
   scroll-margin-top: 5rem;
 }
 
@@ -179,11 +180,11 @@ body {
 }
 
 .hero-title {
-  font-family: var(--font-serif);
-  font-size: 2.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 500;
+  letter-spacing: .1em;
   text-transform: uppercase;
+  font-size: 2.75rem;
   line-height: 1.12;
   margin-bottom: 1rem;
   color: var(--color-text);
@@ -192,13 +193,13 @@ body {
 @media (min-width: 768px) {
   .hero-title {
     font-size: 4.25rem;
-    letter-spacing: 0.05em;
+    letter-spacing: .1em;
     margin-bottom: 1.125rem;
   }
 }
 
 .hero-subtitle {
-  font-family: var(--font-sans);
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 1rem;
   font-weight: 400;
   color: var(--color-text);
@@ -330,26 +331,27 @@ body {
   color: #6c6c6c;
 }
 
-/* ========== CTA ========== */
+/* ========== CTA (primary pill) ========== */
 .hero-cta {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9375rem;
-  font-weight: 500;
-  padding: 0.65rem 1.35rem;
-  background: #000000;
+  gap: .5rem;
+  padding: .72rem 1.4rem;
+  background: #1a1a16;
   color: #ffffff;
-  text-decoration: none;
-  border: none;
+  border: 1.5px solid #1a1a16;
   border-radius: 999px;
-  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: 'Inter', sans-serif;
+  font-size: .85rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .2s, color .2s;
 }
 
 .hero-cta:hover {
-  background: #1a1a1a;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: transparent;
+  color: #1a1a16;
 }
 
 .hero-cta-icon {

@@ -22,7 +22,7 @@ const LNG = -2.6993439971149558;
       rel="noopener noreferrer"
     >
       Open maps
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#6b6558" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M9 11a3 3 0 1 0 6 0 3 3 0 0 0-6 0z"/>
         <path d="M17.657 16.657 13.414 20.9a2 2 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z"/>
       </svg>
@@ -97,7 +97,7 @@ const LNG = -2.6993439971149558;
   }
 
   .text-panel {
-    background: #f0ece4;
+    background: #ffffff;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -106,7 +106,7 @@ const LNG = -2.6993439971149558;
   }
 
   .location-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Playfair Display', Georgia, serif;
     font-size: clamp(2.4rem, 4vw, 3.9rem);
     font-weight: 600;
     color: #1a1a16;
@@ -114,7 +114,8 @@ const LNG = -2.6993439971149558;
   }
 
   .location-desc {
-    font-weight: 300;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
     color: #6b6558;
     font-size: .96rem;
     line-height: 1.75;
@@ -124,22 +125,24 @@ const LNG = -2.6993439971149558;
   .open-maps-btn {
     display: inline-flex;
     align-items: center;
-    gap: .55rem;
-    padding: .75rem 1.5rem;
+    gap: .5rem;
+    padding: .72rem 1.4rem;
+    background: transparent;
+    color: #1a1a16;
     border: 1.5px solid #1a1a16;
     border-radius: 999px;
-    font-family: 'Jost', system-ui, sans-serif;
-    font-size: .86rem;
-    color: #1a1a16;
+    font-family: 'Inter', sans-serif;
+    font-size: .85rem;
+    font-weight: 500;
+    cursor: pointer;
     text-decoration: none;
     width: fit-content;
-    background: transparent;
     transition: background .2s, color .2s;
   }
 
   .open-maps-btn:hover {
     background: #1a1a16;
-    color: #f0ece4;
+    color: #ffffff;
   }
 
   .open-maps-btn svg {
