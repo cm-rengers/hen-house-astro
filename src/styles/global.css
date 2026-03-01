@@ -104,6 +104,10 @@ body {
   color: var(--color-text);
 }
 
+@media (max-width: 400px) {
+  .site-header-logo { font-size: .75rem; letter-spacing: 0; }
+}
+
 .site-header-nav {
   display: flex;
   align-items: center;
@@ -226,6 +230,10 @@ body {
   .hero-media {
     min-height: calc(88vh - 4rem);
   }
+}
+
+@media (max-width: 480px) {
+  .hero-media { min-height: 200px; }
 }
 
 .hero-gallery-wrapper {
