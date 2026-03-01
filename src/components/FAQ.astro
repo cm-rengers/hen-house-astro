@@ -1,0 +1,199 @@
+---
+const faqs = [
+  {
+    q: "What time is check-in and check-out?",
+    a: "Check-in is from 3:00pm and check-out is by 10:00am. If you need flexibility, just ask — we'll always help where we can depending on availability."
+  },
+  {
+    q: "Is there parking available?",
+    a: "Yes — free parking for one car on the private driveway directly outside the cottage. Additional parking may be available nearby — please check with us before arrival."
+  },
+  {
+    q: "Can we bring our dog?",
+    a: "Absolutely — well-behaved dogs are very welcome. Please let us know in advance so we can prepare accordingly. A small cleaning fee may apply."
+  },
+  {
+    q: "Do you have EV charging?",
+    a: "Yes — we have an EV charger available for guest use. Charging is available for an additional fee. Please get in touch before your stay to confirm availability and rates."
+  },
+  {
+    q: "Is the cottage suitable for children?",
+    a: "Yes — the cottage is suitable for families. If you need any specific items such as a travel cot or high chair, let us know in advance and we'll do our best to help."
+  },
+  {
+    q: "What amenities are included?",
+    a: "The cottage includes a fully equipped kitchen, Wi-Fi, fresh bed linen and towels, heating throughout, and complimentary tea & coffee. Please note: we do not have air conditioning or a washing machine."
+  },
+  {
+    q: "How do we access the property?",
+    a: "We'll meet you on arrival and provide the keys in person. Full arrival details will be shared before your stay."
+  },
+  {
+    q: "What is your cancellation policy?",
+    a: "Cancellation terms depend on how you book (direct or via a platform). Please check your booking confirmation or contact us directly for details."
+  },
+];
+---
+
+<section class="faq-section" id="faq">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently<br>asked</h2>
+    </div>
+    <ul class="faq-list" id="faq-list">
+      {
+        faqs.map((item) => (
+          <li class="faq-item">
+            <button class="faq-trigger" aria-expanded="false" type="button">
+              <span class="faq-question">{item.q}</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div class="faq-body">
+              <p class="faq-answer">{item.a}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    background: #ffffff;
+    padding: 6rem 2rem;
+  }
+
+  .faq-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .faq-header {
+    position: sticky;
+    top: 3rem;
+  }
+
+  .faq-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.4rem, 4vw, 3.2rem);
+    font-weight: 600;
+    color: #1a1a16;
+    line-height: 1.1;
+  }
+
+  .faq-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .faq-trigger {
+    width: 100%;
+    background: #f2f2f0;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.5rem 1.1rem 1.75rem;
+    text-align: left;
+    transition: background 0.2s;
+  }
+
+  .faq-trigger:hover {
+    background: #eceae6;
+  }
+
+  .faq-item.open .faq-trigger {
+    border-radius: 20px 20px 0 0;
+  }
+
+  .faq-question {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.97rem;
+    font-weight: 400;
+    color: #1a1a16;
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  .faq-chevron {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: #6b6558;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .faq-item.open .faq-chevron {
+    transform: rotate(180deg);
+  }
+
+  .faq-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #f2f2f0;
+    border-radius: 0 0 20px 20px;
+  }
+
+  .faq-answer {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: #6b6558;
+    font-size: 0.93rem;
+    line-height: 1.75;
+    padding: 1rem 1.75rem 1.5rem;
+  }
+
+  @media (max-width: 720px) {
+    .faq-inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .faq-header {
+      position: static;
+    }
+
+    .faq-section {
+      padding: 4rem 1.25rem;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.faq-trigger').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const item = trigger.closest('.faq-item');
+      const body = item?.querySelector('.faq-body');
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+      document.querySelectorAll('.faq-item').forEach((el) => {
+        const t = el.querySelector('.faq-trigger');
+        const b = el.querySelector('.faq-body');
+        if (t) t.setAttribute('aria-expanded', 'false');
+        if (b) (b as HTMLElement).style.maxHeight = '0';
+        el.classList.remove('open');
+      });
+
+      if (!isOpen && body) {
+        trigger.setAttribute('aria-expanded', 'true');
+        (body as HTMLElement).style.maxHeight = body.scrollHeight + 'px';
+        item?.classList.add('open');
+      }
+    });
+  });
+</script>
