@@ -1,5 +1,5 @@
 ---
-// Sticky header: left logo, center nav, primary CTA "Book now" scrolls to #book.
+// Sticky header: left logo, center nav (desktop) / hamburger (mobile), primary CTA "Book now".
 ---
 
 <header class="site-header" id="site-header">
@@ -12,14 +12,39 @@
       <a href="#location" class="site-header-link">Location</a>
       <a href="#faq" class="site-header-link">FAQ</a>
     </nav>
-    <a href="#book" class="site-header-cta">Book now</a>
+    <div class="site-header-actions">
+      <a href="#book" class="site-header-cta">Book now</a>
+      <button
+        type="button"
+        class="site-header-hamburger"
+        id="hamburger-btn"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </div>
+  <div class="site-header-mobile-nav" id="mobile-nav" aria-hidden="true">
+    <a href="#gallery" class="site-header-mobile-link">Gallery</a>
+    <a href="#stay" class="site-header-mobile-link">Stay</a>
+    <a href="#facilities" class="site-header-mobile-link">Facilities</a>
+    <a href="#location" class="site-header-mobile-link">Location</a>
+    <a href="#faq" class="site-header-mobile-link">FAQ</a>
+    <a href="#book" class="site-header-mobile-cta">Book now</a>
   </div>
 </header>
 
 <script>
   (function () {
     const header = document.getElementById('site-header');
-    if (!header) return;
+    const hamburger = document.getElementById('hamburger-btn');
+    const mobileNav = document.getElementById('mobile-nav');
+    if (!header || !hamburger || !mobileNav) return;
+
     function updateScroll() {
       if (window.scrollY > 8) {
         header.classList.add('is-scrolled');
@@ -29,5 +54,32 @@
     }
     window.addEventListener('scroll', updateScroll, { passive: true });
     updateScroll();
+
+    function openMenu() {
+      header.classList.add('menu-open');
+      hamburger.setAttribute('aria-label', 'Close menu');
+      hamburger.setAttribute('aria-expanded', 'true');
+      mobileNav.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      header.classList.remove('menu-open');
+      hamburger.setAttribute('aria-label', 'Open menu');
+      hamburger.setAttribute('aria-expanded', 'false');
+      mobileNav.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    function toggleMenu() {
+      if (header.classList.contains('menu-open')) closeMenu();
+      else openMenu();
+    }
+
+    hamburger.addEventListener('click', toggleMenu);
+    mobileNav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeMenu);
+    });
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(min-width: 768px)').matches) closeMenu();
+    });
   })();
 </script>
