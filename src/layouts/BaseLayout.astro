@@ -4,9 +4,14 @@ import Footer from '../components/Footer.astro';
 
 interface Props {
   title?: string;
+  description?: string;
+  ogImage?: string;
 }
 
-const { title = 'The Hen House' } = Astro.props;
+const { title = 'The Hen House', description = 'Boutique countryside retreat in Cumbria. The Hen House offers a peaceful escape with stunning views, modern comforts and easy access to the Lake District.', ogImage = '/images/gallery/gallery_1.jpg' } = Astro.props;
+
+const siteUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
+const imageUrl = new URL(ogImage, Astro.url.origin).href;
 ---
 
 <!doctype html>
@@ -19,6 +24,16 @@ const { title = 'The Hen House' } = Astro.props;
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <!-- Open Graph / social sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:url" content={siteUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
