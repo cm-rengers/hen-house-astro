@@ -105,7 +105,7 @@ body {
 }
 
 @media (max-width: 400px) {
-  .site-header-logo { font-size: .75rem; letter-spacing: 0; }
+  .site-header-logo { font-size: 1rem; letter-spacing: 0.05em; }
 }
 
 .site-header-nav {
@@ -150,56 +150,66 @@ body {
   color: var(--color-text);
 }
 
-/* Hamburger: hidden on desktop */
+/* Hamburger: hidden on desktop; square hit area, centred icon */
 .site-header-hamburger {
   display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
   width: 44px;
   height: 44px;
   padding: 0;
-  border: none;
+  margin: 0;
+  border: 2px solid var(--color-border, #e5e5e5);
+  border-radius: 10px;
   background: transparent;
   cursor: pointer;
   color: var(--color-text);
-  transition: color 0.2s ease;
+  inline-size: 44px;
+  block-size: 44px;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 .site-header-hamburger:hover {
   color: var(--color-text-muted);
+  border-color: var(--color-text-muted);
 }
-.hamburger-line {
+.site-header-hamburger .hamburger-icon {
   display: block;
-  width: 22px;
-  height: 2px;
-  background: currentColor;
-  border-radius: 1px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  line-height: 0;
+  flex-shrink: 0;
+}
+.site-header-hamburger .hamburger-line {
   transition: transform 0.25s ease, opacity 0.25s ease;
+  transform-origin: center;
 }
-.site-header.menu-open .hamburger-line:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
+.site-header.menu-open .site-header-hamburger .hamburger-line:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
 }
-.site-header.menu-open .hamburger-line:nth-child(2) {
+.site-header.menu-open .site-header-hamburger .hamburger-line:nth-child(2) {
   opacity: 0;
 }
-.site-header.menu-open .hamburger-line:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
+.site-header.menu-open .site-header-hamburger .hamburger-line:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
 }
 
-/* Mobile nav panel: hidden by default */
+/* Mobile nav panel: fully collapsed when closed (no padding = no sliver) */
 .site-header-mobile-nav {
   display: none;
   flex-direction: column;
-  padding: 1rem 1.5rem 1.5rem;
+  padding: 0;
   background: #ffffff;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: none;
   gap: 0;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease, box-shadow 0.2s ease;
+  transition: max-height 0.3s ease, box-shadow 0.2s ease, padding 0.2s ease;
 }
 .site-header.menu-open .site-header-mobile-nav {
   max-height: 320px;
+  padding: 1rem 1.5rem 1.5rem;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
 }
 .site-header-mobile-link {
   font-size: 1rem;
@@ -231,6 +241,10 @@ body {
 }
 
 @media (max-width: 767px) {
+  .site-header-logo {
+    font-size: 1.35rem;
+    letter-spacing: 0.15em;
+  }
   .site-header-nav {
     display: none;
   }
@@ -238,7 +252,7 @@ body {
     display: none;
   }
   .site-header-hamburger {
-    display: flex;
+    display: inline-flex;
   }
   .site-header-mobile-nav {
     display: flex;
