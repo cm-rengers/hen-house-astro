@@ -347,6 +347,48 @@ const images = [
     font-size: 0.8rem;
     margin: 0;
   }
+
+  /* Mobile: hide chicken; 2 full-width stacked, then 2 half-width side-by-side */
+  @media (max-width: 767px) {
+    .mosaic {
+      grid-template-columns: 1fr;
+      height: auto;
+      min-height: 0;
+    }
+
+    .mosaic-left {
+      display: none;
+    }
+
+    .mosaic-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: minmax(200px, 1fr) minmax(200px, 1fr) minmax(160px, 1fr);
+      gap: 8px;
+    }
+
+    .mosaic-right .cell-pool {
+      grid-column: 1 / -1;
+      flex: unset;
+    }
+
+    .mosaic-right .cell-sailboat {
+      grid-column: 1 / -1;
+      flex: unset;
+    }
+
+    .mosaic-right-bottom {
+      display: contents;
+    }
+
+    .mosaic-right .mosaic-cell-sheep {
+      grid-column: 1;
+    }
+
+    .mosaic-right .mosaic-cell-jetty {
+      grid-column: 2;
+    }
+  }
 </style>
 
 <script is:inline>
@@ -367,11 +409,26 @@ const images = [
     { src: '/images/gallery/gallery_2.jpg', alt: 'Sheep' },
     { src: '/images/gallery/gallery_3.jpg', alt: 'Jetty' },
   ];
-  const total = images.length;
+  const mobileImages = images.slice(1);
   let current = 0;
 
+  function isMobileGallery() {
+    return window.matchMedia('(max-width: 767px)').matches;
+  }
+
+  function getActiveImages() {
+    return isMobileGallery() ? mobileImages : images;
+  }
+
+  function getTotal() {
+    return getActiveImages().length;
+  }
+
   function openLightbox(index) {
-    current = (index + total) % total;
+    var active = getActiveImages();
+    var total = active.length;
+    current = isMobileGallery() ? (index - 1 + total) % total : (index + total) % total;
+    if (current < 0) current = 0;
     lightbox.classList.add('is-open');
     document.body.style.overflow = 'hidden';
     updateLightboxContent();
@@ -383,7 +440,11 @@ const images = [
   }
 
   function updateLightboxContent() {
-    const img = images[current];
+    var active = getActiveImages();
+    var total = active.length;
+    if (current >= total) current = total - 1;
+    if (current < 0) current = 0;
+    var img = active[current];
     lightboxImg.src = img.src;
     lightboxImg.alt = img.alt;
     lightboxCaption.textContent = img.alt;
@@ -391,11 +452,13 @@ const images = [
   }
 
   function goPrev() {
+    var total = getTotal();
     current = (current - 1 + total) % total;
     updateLightboxContent();
   }
 
   function goNext() {
+    var total = getTotal();
     current = (current + 1) % total;
     updateLightboxContent();
   }
