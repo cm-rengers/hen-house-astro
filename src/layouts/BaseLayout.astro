@@ -8,7 +8,7 @@ interface Props {
   ogImage?: string;
 }
 
-const { title = 'The Hen House', description = 'Boutique countryside retreat in Cumbria. The Hen House offers a peaceful escape with stunning views, modern comforts and easy access to the Lake District.', ogImage = '/images/gallery/gallery_1.jpg' } = Astro.props;
+const { title = 'The Hen House', description = 'Boutique countryside retreat in Cumbria. The Hen House offers a peaceful escape with stunning views, modern comforts and easy access to the Lake District.', ogImage = '/images/hero/hero_gallery_1.jpg' } = Astro.props;
 
 const siteUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
 const imageUrl = new URL(ogImage, Astro.url.origin).href;
