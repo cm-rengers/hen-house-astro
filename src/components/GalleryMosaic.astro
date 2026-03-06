@@ -7,11 +7,11 @@ export interface Props {
 const { heading = "Gallery", subheading = "A glimpse of the Hen House and Cumbria." } = Astro.props;
 
 const images = [
-  { src: "/images/gallery/gallery_1.jpg", alt: "Chicken", objectPosition: "45% center" },
-  { src: "/images/gallery/gallery_4.jpg", alt: "Woodland pool", objectPosition: "center 38%" },
-  { src: "/images/gallery/gallery_5.jpg", alt: "Sailing on Windermere", objectPosition: "center 55%" },
-  { src: "/images/gallery/gallery_2.jpg", alt: "Sheep", objectPosition: "center 50%" },
-  { src: "/images/gallery/gallery_3.jpg", alt: "Jetty", objectPosition: "center 30%" },
+  { src: "/images/gallery/gallery_1.webp", alt: "Chicken", objectPosition: "45% center" },
+  { src: "/images/gallery/gallery_4.webp", alt: "Woodland pool", objectPosition: "center 38%" },
+  { src: "/images/gallery/gallery_5.webp", alt: "Sailing on Windermere", objectPosition: "center 55%" },
+  { src: "/images/gallery/gallery_2.webp", alt: "Sheep", objectPosition: "center 50%" },
+  { src: "/images/gallery/gallery_3.webp", alt: "Jetty", objectPosition: "center 30%" },
 ];
 ---
 
@@ -403,11 +403,11 @@ const images = [
   const lightboxBackdrop = document.getElementById('lightboxBackdrop');
 
   const images = [
-    { src: '/images/gallery/gallery_1.jpg', alt: 'Chicken' },
-    { src: '/images/gallery/gallery_4.jpg', alt: 'Woodland pool' },
-    { src: '/images/gallery/gallery_5.jpg', alt: 'Sailing on Windermere' },
-    { src: '/images/gallery/gallery_2.jpg', alt: 'Sheep' },
-    { src: '/images/gallery/gallery_3.jpg', alt: 'Jetty' },
+    { src: '/images/gallery/gallery_1.webp', alt: 'Chicken' },
+    { src: '/images/gallery/gallery_4.webp', alt: 'Woodland pool' },
+    { src: '/images/gallery/gallery_5.webp', alt: 'Sailing on Windermere' },
+    { src: '/images/gallery/gallery_2.webp', alt: 'Sheep' },
+    { src: '/images/gallery/gallery_3.webp', alt: 'Jetty' },
   ];
   const mobileImages = images.slice(1);
   let current = 0;
