@@ -9,7 +9,6 @@ import BlogCTA from '../../components/blog/BlogCTA.astro';
 import FAQAccordion from '../../components/blog/FAQAccordion.astro';
 import RelatedPosts from '../../components/blog/RelatedPosts.astro';
 import BlogSidebar from '../../components/blog/BlogSidebar.astro';
-import NewsletterPlaceholder from '../../components/blog/NewsletterPlaceholder.astro';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -144,7 +143,7 @@ const breadcrumbSchema = {
       <div class="lg:flex lg:gap-16 xl:gap-20">
         <article class="min-w-0 flex-1">
           <div
-            class="prose prose-lg max-w-none prose-headings:font-[Cormorant_Garamond,Georgia,serif] prose-headings:font-medium prose-headings:tracking-tight prose-headings:leading-tight prose-h2:text-[clamp(1.4rem,2.8vw,2rem)] prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-[clamp(1.1rem,2vw,1.4rem)] prose-h3:mt-8 prose-h3:mb-3 prose-p:text-[#1a1a1a] prose-p:leading-[1.8] prose-p:text-[0.95rem] prose-a:text-[#1a1a1a] prose-a:underline prose-a:decoration-[#e5e2dc] prose-a:underline-offset-2 hover:prose-a:decoration-[#1a1a1a] prose-strong:font-semibold prose-blockquote:border-l-[#e5e2dc] prose-blockquote:text-[#6b6b6b] prose-blockquote:not-italic prose-blockquote:font-normal prose-img:w-full prose-img:object-cover prose-hr:border-[#e5e2dc] prose-li:text-[#1a1a1a] prose-li:leading-[1.8]"
+            class="prose prose-lg max-w-none prose-headings:font-[Cormorant_Garamond,Georgia,serif] prose-headings:font-medium prose-headings:tracking-tight prose-headings:leading-tight prose-h2:text-[clamp(1.4rem,2.8vw,2rem)] prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-[clamp(1.1rem,2vw,1.4rem)] prose-h3:mt-8 prose-h3:mb-3 prose-p:text-[#1a1a1a] prose-p:leading-[1.8] prose-p:text-[0.95rem] prose-a:text-[#1a1a1a] prose-a:underline prose-a:decoration-[#e5e2dc] prose-a:underline-offset-2 hover:prose-a:decoration-[#1a1a1a] prose-strong:font-semibold prose-blockquote:border-l-[#e5e2dc] prose-blockquote:text-[#6b6b6b] prose-blockquote:not-italic prose-blockquote:font-normal prose-img:w-full prose-img:object-cover prose-hr:border-[#e5e2dc] prose-li:text-[#1a1a1a] prose-li:leading-[1.8] prose-li:marker:text-[#6b6b6b]"
           >
             <Content />
           </div>
@@ -164,7 +163,6 @@ const breadcrumbSchema = {
     </div>
 
     <RelatedPosts currentPost={post} allPosts={allPosts} readingTimes={readingTimes} />
-    <NewsletterPlaceholder />
     <BlogCTA />
   </main>
 </BaseLayout>
