@@ -7,27 +7,80 @@ interface Props {
 
 const {
   headline = 'Ready to escape to Cumbria?',
-  subheading = 'Check availability and book your stay at The Hen House, with dog-friendly space, EV charging and easy access from the M6.',
+  subheading = 'Check availability and book your stay — dog-friendly, EV charging, and just minutes from the M6.',
   variant = 'standard',
 } = Astro.props;
 ---
 
-<section class="blog-cta" aria-labelledby="blog-cta-heading">
-  <div class="blog-container blog-cta-inner">
-    <div class="blog-cta-copy">
-      <p class="blog-kicker">Book your stay</p>
-      <h2 id="blog-cta-heading">{headline}</h2>
-      <p>{subheading}</p>
-    </div>
-    <div class="blog-cta-actions">
+<section
+  class="w-full py-16 md:py-20 bg-[#f9f8f6]"
+  aria-labelledby="blog-cta-heading"
+>
+  <div class="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-14">
+    <div class="lg:flex lg:items-end lg:justify-between lg:gap-12">
+      <div class="mb-8 lg:mb-0 max-w-[560px]">
+        <p class="text-[#6b6b6b] text-[10px] tracking-[0.2em] uppercase mb-3">
+          Book your stay
+        </p>
+        <h2
+          id="blog-cta-heading"
+          class="mb-4 leading-[1.1]"
+          style="
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-weight: 500;
+            font-size: clamp(1.6rem, 3.5vw, 2.75rem);
+            letter-spacing: -0.01em;
+          "
+        >
+          {headline}
+        </h2>
+        <p class="text-[#6b6b6b] leading-relaxed" style="font-size: 0.95rem;">
+          {subheading}
+        </p>
+      </div>
+
       {variant === 'standard' ? (
-        <>
-          <a class="blog-button blog-button-primary" href="https://www.airbnb.co.uk/rooms/1477403609287112139" target="_blank" rel="noopener noreferrer">Airbnb</a>
-          <a class="blog-button blog-button-secondary" href="https://www.booking.com/hotel/gb/the-hen-house-westmorland-and-furness.en-gb.html" target="_blank" rel="noopener noreferrer">Booking.com</a>
-        </>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a
+            href="https://www.airbnb.co.uk/rooms/1477403609287112139"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#1a1a1a] text-white text-xs tracking-widest uppercase hover:bg-[#2d2d2d] transition-colors duration-200 no-underline"
+          >
+            Book via Airbnb ↗
+          </a>
+          <a
+            href="https://www.booking.com/hotel/gb/the-hen-house-westmorland-and-furness.en-gb.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-[#1a1a1a] text-[#1a1a1a] text-xs tracking-widest uppercase hover:bg-[#1a1a1a] hover:text-white transition-all duration-200 no-underline"
+          >
+            Book via Booking.com ↗
+          </a>
+        </div>
       ) : (
-        <a class="blog-button blog-button-primary" href="mailto:hello@thehenhousecumbria.co.uk">Get in touch</a>
+        <a
+          href="mailto:hello@thehenhousecumbria.co.uk"
+          class="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#1a1a1a] text-white text-xs tracking-widest uppercase hover:bg-[#2d2d2d] transition-colors duration-200 no-underline"
+        >
+          Get in touch ↗
+        </a>
       )}
     </div>
+
+    {variant === 'standard' && (
+      <div
+        class="mt-8 pt-8 border-t border-[#e5e2dc] flex flex-wrap gap-6"
+        style="font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #6b6b6b;"
+      >
+        <span>★★★★★ 5/5 on Airbnb</span>
+        <span aria-hidden="true" class="text-[#e5e2dc]">|</span>
+        <span>★★★★★ 9.5/10 on Booking.com</span>
+        <span aria-hidden="true" class="text-[#e5e2dc]">|</span>
+        <span>Dog friendly</span>
+        <span aria-hidden="true" class="text-[#e5e2dc]">|</span>
+        <span>EV charging available</span>
+      </div>
+    )}
   </div>
 </section>

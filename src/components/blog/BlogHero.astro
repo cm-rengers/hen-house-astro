@@ -1,0 +1,74 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  readingTime: number;
+}
+
+const { post, readingTime } = Astro.props;
+const { title, description, publishDate, heroImage, heroImageAlt, tags } = post.data;
+const formattedDate = publishDate.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<section class="relative w-full overflow-hidden" style="height: clamp(480px, 70vh, 760px);">
+  <Image
+    src={heroImage}
+    alt={heroImageAlt}
+    width={1600}
+    height={900}
+    class="absolute inset-0 w-full h-full object-cover"
+    loading="eager"
+    decoding="async"
+  />
+
+  <div
+    class="absolute inset-0"
+    style="background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.55) 100%);"
+    aria-hidden="true"
+  ></div>
+
+  <div class="absolute bottom-0 left-0 right-0 px-6 pb-12 md:px-12 md:pb-16 lg:px-20 lg:pb-20 max-w-[1200px] mx-auto">
+    {tags.length > 0 && (
+      <ul class="flex flex-wrap gap-2 mb-5 m-0 p-0 list-none" aria-label="Post categories">
+        {tags.map((tag) => (
+          <li>
+            <a
+              href={`/blog?tag=${encodeURIComponent(tag)}`}
+              class="inline-block px-4 py-1 rounded-full text-[11px] tracking-[0.12em] uppercase font-medium text-white border border-white/40 hover:bg-white hover:text-[#1a1a1a] transition-all duration-200 backdrop-blur-sm bg-white/10 no-underline"
+            >
+              {tag}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    <h1
+      class="text-white mb-4 leading-[1.05]"
+      style="
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: clamp(2rem, 5vw, 4rem);
+        font-weight: 500;
+        letter-spacing: -0.01em;
+      "
+    >
+      {title}
+    </h1>
+
+    <p class="text-white/80 mb-6 max-w-[640px] leading-relaxed" style="font-size: clamp(0.95rem, 1.8vw, 1.1rem);">
+      {description}
+    </p>
+
+    <div class="flex items-center gap-5 text-white/60" style="font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;">
+      <time datetime={publishDate.toISOString()}>{formattedDate}</time>
+      <span aria-hidden="true" class="text-white/30">|</span>
+      <span>{readingTime} min read</span>
+    </div>
+  </div>
+</section>

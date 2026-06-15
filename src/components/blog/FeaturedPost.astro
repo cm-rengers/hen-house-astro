@@ -17,23 +17,69 @@ const formattedDate = publishDate.toLocaleDateString('en-GB', {
 });
 ---
 
-<section class="blog-featured" aria-label="Featured article">
-  <a href={`/blog/${slug}`} class="blog-featured-link">
-    <Image src={heroImage} alt={heroImageAlt} width={1600} height={900} loading="eager" />
-    <div class="blog-featured-scrim" aria-hidden="true"></div>
-    <div class="blog-featured-copy">
-      <p class="blog-featured-label">Featured</p>
+<section class="w-full" aria-label="Featured article">
+  <a
+    href={`/blog/${slug}`}
+    class="group relative flex items-end w-full overflow-hidden focus-visible:outline-2 focus-visible:outline-[#1a1a1a] focus-visible:outline-offset-2 no-underline"
+    style="min-height: clamp(400px, 62vh, 700px);"
+  >
+    <Image
+      src={heroImage}
+      alt={heroImageAlt}
+      width={1600}
+      height={900}
+      class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+      loading="eager"
+    />
+
+    <div
+      class="absolute inset-0"
+      style="background: linear-gradient(160deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.72) 100%);"
+      aria-hidden="true"
+    ></div>
+
+    <div class="absolute top-6 left-6 md:top-8 md:left-10 text-white/70 text-[10px] tracking-[0.18em] uppercase">
+      Featured
+    </div>
+
+    <div class="relative z-10 px-6 pb-10 md:px-10 md:pb-14 lg:px-14 max-w-[860px]">
       {tags.length > 0 && (
-        <ul class="blog-featured-tags" aria-label="Tags">
-          {tags.slice(0, 3).map((tag) => <li>{tag}</li>)}
+        <ul class="flex flex-wrap gap-2 mb-4 m-0 p-0 list-none">
+          {tags.slice(0, 3).map((tag) => (
+            <li>
+              <span class="inline-block px-3 py-[3px] rounded-full text-[10px] tracking-[0.12em] uppercase text-white/70 border border-white/25">
+                {tag}
+              </span>
+            </li>
+          ))}
         </ul>
       )}
-      <h2>{title}</h2>
-      <p>{description}</p>
-      <div class="blog-featured-meta">
-        <time datetime={publishDate.toISOString()}>{formattedDate}</time>
-        <span aria-hidden="true">/</span>
-        <span>{readingTime} min read</span>
+
+      <h2
+        class="text-white mb-3 leading-[1.05]"
+        style="
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-weight: 500;
+          font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+          letter-spacing: -0.01em;
+        "
+      >
+        {title}
+      </h2>
+
+      <p class="text-white/70 mb-5 leading-relaxed max-w-[560px]" style="font-size: clamp(0.9rem, 1.6vw, 1.05rem);">
+        {description}
+      </p>
+
+      <div class="flex items-center gap-5">
+        <div class="text-white/50" style="font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;">
+          <time datetime={publishDate.toISOString()}>{formattedDate}</time>
+          <span class="mx-3 text-white/25" aria-hidden="true">|</span>
+          <span>{readingTime} min read</span>
+        </div>
+        <span class="ml-auto text-white text-xs tracking-widest uppercase flex items-center gap-1 group-hover:gap-2 transition-all duration-200" aria-hidden="true">
+          Read article ↗
+        </span>
       </div>
     </div>
   </a>

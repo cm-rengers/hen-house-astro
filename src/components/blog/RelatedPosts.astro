@@ -1,37 +1,90 @@
 ---
+import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-import BlogCard from './BlogCard.astro';
 
 interface Props {
   currentPost: CollectionEntry<'blog'>;
   allPosts: CollectionEntry<'blog'>[];
-  readingTimes: Record<string, number>;
+  readingTimes?: Record<string, number>;
 }
 
-const { currentPost, allPosts, readingTimes } = Astro.props;
+const { currentPost, allPosts, readingTimes = {} } = Astro.props;
 const toSlug = (id: string) => id.replace(/\.(md|mdx)$/, '');
-const currentTags = new Set(currentPost.data.tags);
-const relatedPosts = allPosts
-  .filter((post) => toSlug(post.id) !== toSlug(currentPost.id))
-  .map((post) => ({
-    post,
-    score: post.data.tags.filter((tag) => currentTags.has(tag)).length,
-  }))
-  .filter(({ score }) => score > 0)
-  .sort((a, b) => b.score - a.score || b.post.data.publishDate.getTime() - a.post.data.publishDate.getTime())
-  .slice(0, 3)
-  .map(({ post }) => post);
+const related = allPosts
+  .filter(
+    (post) =>
+      toSlug(post.id) !== toSlug(currentPost.id) &&
+      !post.data.draft &&
+      post.data.tags.some((tag) => currentPost.data.tags.includes(tag)),
+  )
+  .slice(0, 3);
 ---
 
-{relatedPosts.length > 0 && (
-  <section class="blog-related" aria-labelledby="blog-related-heading">
-    <div class="blog-container">
-      <p class="blog-kicker">Keep reading</p>
-      <h2 id="blog-related-heading">Related guides</h2>
-      <div class="blog-grid">
-        {relatedPosts.map((post) => (
-          <BlogCard post={post} readingTime={readingTimes[toSlug(post.id)] ?? 1} />
-        ))}
+{related.length > 0 && (
+  <section class="py-16 md:py-20 border-t border-[#e5e2dc]" aria-labelledby="related-heading">
+    <div class="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-14">
+      <p class="text-[#6b6b6b] text-[10px] tracking-[0.2em] uppercase mb-2">
+        Continue reading
+      </p>
+      <h2
+        id="related-heading"
+        class="mb-10 md:mb-12"
+        style="
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-weight: 500;
+          font-size: clamp(1.5rem, 3vw, 2.25rem);
+          letter-spacing: -0.01em;
+        "
+      >
+        You might also enjoy
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {related.map((post) => {
+          const slug = toSlug(post.id);
+          const rt = readingTimes[slug] ?? 4;
+          const date = post.data.publishDate.toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          });
+
+          return (
+            <article class="group flex flex-col bg-[#f9f8f6] overflow-hidden">
+              <a
+                href={`/blog/${slug}`}
+                class="block overflow-hidden no-underline"
+                style="aspect-ratio: 4/3;"
+                aria-label={`Read: ${post.data.title}`}
+                tabindex="-1"
+              >
+                <Image
+                  src={post.data.heroImage}
+                  alt={post.data.heroImageAlt}
+                  width={560}
+                  height={420}
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </a>
+              <div class="p-6">
+                <div class="text-[#6b6b6b] mb-2" style="font-size: 0.67rem; letter-spacing: 0.12em; text-transform: uppercase;">
+                  <time datetime={post.data.publishDate.toISOString()}>{date}</time>
+                  <span class="mx-2">·</span>
+                  <span>{rt} min</span>
+                </div>
+                <h3 class="leading-snug mb-3" style="font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500;">
+                  <a href={`/blog/${slug}`} class="text-[#1a1a1a] hover:text-[#6b6b6b] transition-colors duration-200 no-underline" style="font-size: clamp(1.05rem, 2vw, 1.3rem);">
+                    {post.data.title}
+                  </a>
+                </h3>
+                <a href={`/blog/${slug}`} class="text-xs tracking-widest uppercase text-[#1a1a1a] flex items-center gap-1 hover:gap-2 transition-all duration-200 no-underline">
+                  Read ↗
+                </a>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </div>
   </section>
