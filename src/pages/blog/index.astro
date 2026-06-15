@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import FeaturedPost from '../../components/blog/FeaturedPost.astro';
+import BlogCard from '../../components/blog/BlogCard.astro';
+import BlogCTA from '../../components/blog/BlogCTA.astro';
+
+function estimateReadingTime(body: string): number {
+  const words = body.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
+
+const toSlug = (id: string) => id.replace(/\.(md|mdx)$/, '');
+
+const allPosts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+const featuredPost = allPosts.find((post) => post.data.featured) ?? allPosts[0];
+const gridPosts = featuredPost ? allPosts.filter((post) => toSlug(post.id) !== toSlug(featuredPost.id)) : allPosts;
+const activeTag = Astro.url.searchParams.get('tag');
+const displayedPosts = activeTag
+  ? gridPosts.filter((post) => post.data.tags.includes(activeTag))
+  : gridPosts;
+const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))].sort();
+---
+
+<BaseLayout
+  title="Journal - The Hen House Cumbria"
+  description="Guides, local tips and slow-travel inspiration from The Hen House, a boutique cottage retreat in Cumbria near the M6 and the Lake District."
+>
+  <Header />
+  <main>
+    <section class="blog-index-hero blog-container">
+      <p class="blog-kicker">The Hen House</p>
+      <h1>Journal</h1>
+      <p>Guides for dog-friendly days, Lake District routes, quiet Cumbrian corners and making the most of your stay.</p>
+    </section>
+
+    {featuredPost && (
+      <FeaturedPost post={featuredPost} readingTime={estimateReadingTime(featuredPost.body ?? '')} />
+    )}
+
+    {allTags.length > 0 && (
+      <nav class="blog-container blog-filter" aria-label="Filter by topic">
+        <a class={!activeTag ? 'is-active' : ''} href="/blog">All</a>
+        {allTags.map((tag) => (
+          <a class={activeTag === tag ? 'is-active' : ''} href={`/blog?tag=${encodeURIComponent(tag)}`}>{tag}</a>
+        ))}
+      </nav>
+    )}
+
+    <section class="blog-container blog-listing" aria-label="Blog posts">
+      {displayedPosts.length > 0 ? (
+        <div class="blog-grid">
+          {displayedPosts.map((post) => (
+            <BlogCard post={post} readingTime={estimateReadingTime(post.body ?? '')} />
+          ))}
+        </div>
+      ) : (
+        <p class="blog-empty">No posts found for "{activeTag}". <a href="/blog">View all posts</a>.</p>
+      )}
+    </section>
+
+    <BlogCTA />
+  </main>
+</BaseLayout>

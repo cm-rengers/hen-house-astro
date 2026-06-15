@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  allPosts: CollectionEntry<'blog'>[];
+  currentSlug: string;
+}
+
+const { allPosts, currentSlug } = Astro.props;
+const toSlug = (id: string) => id.replace(/\.(md|mdx)$/, '');
+const latestPosts = allPosts.filter((post) => toSlug(post.id) !== currentSlug).slice(0, 4);
+const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))].sort();
+---
+
+<aside class="blog-sidebar" aria-label="Blog sidebar">
+  <div class="blog-sidebar-panel">
+    <h2>Journal</h2>
+    <p>Local notes for slower stays, dog-friendly days and practical trips through Cumbria.</p>
+  </div>
+  {latestPosts.length > 0 && (
+    <div class="blog-sidebar-panel">
+      <h2>Latest guides</h2>
+      <ul>
+        {latestPosts.map((post) => (
+          <li><a href={`/blog/${toSlug(post.id)}`}>{post.data.title}</a></li>
+        ))}
+      </ul>
+    </div>
+  )}
+  {allTags.length > 0 && (
+    <div class="blog-sidebar-panel">
+      <h2>Topics</h2>
+      <ul class="blog-tags">
+        {allTags.map((tag) => <li><a href={`/blog?tag=${encodeURIComponent(tag)}`}>{tag}</a></li>)}
+      </ul>
+    </div>
+  )}
+</aside>

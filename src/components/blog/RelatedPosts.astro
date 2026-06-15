@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BlogCard from './BlogCard.astro';
+
+interface Props {
+  currentPost: CollectionEntry<'blog'>;
+  allPosts: CollectionEntry<'blog'>[];
+  readingTimes: Record<string, number>;
+}
+
+const { currentPost, allPosts, readingTimes } = Astro.props;
+const toSlug = (id: string) => id.replace(/\.(md|mdx)$/, '');
+const currentTags = new Set(currentPost.data.tags);
+const relatedPosts = allPosts
+  .filter((post) => toSlug(post.id) !== toSlug(currentPost.id))
+  .map((post) => ({
+    post,
+    score: post.data.tags.filter((tag) => currentTags.has(tag)).length,
+  }))
+  .filter(({ score }) => score > 0)
+  .sort((a, b) => b.score - a.score || b.post.data.publishDate.getTime() - a.post.data.publishDate.getTime())
+  .slice(0, 3)
+  .map(({ post }) => post);
+---
+
+{relatedPosts.length > 0 && (
+  <section class="blog-related" aria-labelledby="blog-related-heading">
+    <div class="blog-container">
+      <p class="blog-kicker">Keep reading</p>
+      <h2 id="blog-related-heading">Related guides</h2>
+      <div class="blog-grid">
+        {relatedPosts.map((post) => (
+          <BlogCard post={post} readingTime={readingTimes[toSlug(post.id)] ?? 1} />
+        ))}
+      </div>
+    </div>
+  </section>
+)}

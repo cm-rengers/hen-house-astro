@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  readingTime: number;
+}
+
+const { post, readingTime } = Astro.props;
+const { title, description, publishDate, heroImage, heroImageAlt, tags } = post.data;
+const slug = post.id.replace(/\.(md|mdx)$/, '');
+const formattedDate = publishDate.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<section class="blog-featured" aria-label="Featured article">
+  <a href={`/blog/${slug}`} class="blog-featured-link">
+    <Image src={heroImage} alt={heroImageAlt} width={1600} height={900} loading="eager" />
+    <div class="blog-featured-scrim" aria-hidden="true"></div>
+    <div class="blog-featured-copy">
+      <p class="blog-featured-label">Featured</p>
+      {tags.length > 0 && (
+        <ul class="blog-featured-tags" aria-label="Tags">
+          {tags.slice(0, 3).map((tag) => <li>{tag}</li>)}
+        </ul>
+      )}
+      <h2>{title}</h2>
+      <p>{description}</p>
+      <div class="blog-featured-meta">
+        <time datetime={publishDate.toISOString()}>{formattedDate}</time>
+        <span aria-hidden="true">/</span>
+        <span>{readingTime} min read</span>
+      </div>
+    </div>
+  </a>
+</section>

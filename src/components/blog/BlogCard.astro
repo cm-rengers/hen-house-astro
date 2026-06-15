@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  readingTime: number;
+}
+
+const { post, readingTime } = Astro.props;
+const { title, description, publishDate, heroImage, heroImageAlt, tags } = post.data;
+const slug = post.id.replace(/\.(md|mdx)$/, '');
+const formattedDate = publishDate.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<article class="blog-card">
+  <a href={`/blog/${slug}`} class="blog-card-image" aria-label={`Read ${title}`}>
+    <Image src={heroImage} alt={heroImageAlt} width={720} height={540} loading="lazy" />
+  </a>
+  <div class="blog-card-body">
+    <p class="blog-meta">
+      <time datetime={publishDate.toISOString()}>{formattedDate}</time>
+      <span aria-hidden="true">/</span>
+      <span>{readingTime} min read</span>
+    </p>
+    <h2><a href={`/blog/${slug}`}>{title}</a></h2>
+    <p>{description}</p>
+    {tags.length > 0 && (
+      <ul class="blog-tags" aria-label="Tags">
+        {tags.slice(0, 3).map((tag) => (
+          <li><a href={`/blog?tag=${encodeURIComponent(tag)}`}>{tag}</a></li>
+        ))}
+      </ul>
+    )}
+  </div>
+</article>
