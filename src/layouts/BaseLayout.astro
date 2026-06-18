@@ -5,10 +5,18 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  ogTitle?: string;
+  ogDescription?: string;
   ogImage?: string;
 }
 
-const { title = 'The Hen House', description = 'Boutique countryside retreat in Cumbria. The Hen House offers a peaceful escape with stunning views, modern comforts and easy access to the Lake District.', ogImage = '/images/og/og_default.jpg' } = Astro.props;
+const {
+  title = 'The Hen House – Cosy Lakeland Cottage Retreat Near the M6',
+  description = 'A cosy cottage retreat in the Lakeland countryside near Kendal. Dog friendly, EV charging and an easy escape from the M6 — perfect for weekend breaks, midweek resets and longer stays.',
+  ogTitle = 'The Hen House – Cosy Lakeland Cottage Retreat',
+  ogDescription = 'A cosy cottage near the M6 with easy access to the Lake District and Yorkshire Dales. Dog friendly, EV charging, and the kind of quiet that makes mornings feel unhurried.',
+  ogImage = '/images/og/og_default.jpg'
+} = Astro.props;
 
 const siteUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
 const imageUrl = new URL(ogImage, Astro.url.origin).href;
@@ -27,17 +35,17 @@ const imageUrl = new URL(ogImage, Astro.url.origin).href;
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <!-- Open Graph / social sharing -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
     <meta property="og:image" content={imageUrl} />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1620" />
     <meta property="og:image:height" content="1080" />
-    <meta property="og:image:alt" content={title} />
+    <meta property="og:image:alt" content={ogTitle} />
     <meta property="og:url" content={siteUrl} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={ogDescription} />
     <meta name="twitter:image" content={imageUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
