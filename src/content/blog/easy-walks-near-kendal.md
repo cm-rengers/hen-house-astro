@@ -2,7 +2,7 @@
 title: "Easy Walks Near Kendal — Perfect for a Day Trip"
 description: "The best easy walks in South Lakeland, all within reach of Kendal and perfect for a day trip — from quick fell tops to gentle valley strolls, no two-hour drive required."
 publishDate: 2025-10-08
-heroImage: ../../assets/blog/lake-district-walks-m6.jpg
+heroImage: ../../assets/blog/lake-district-walks-m6.webp
 heroImageAlt: "Looking north across a Cumbrian valley from a limestone ridge, late afternoon light"
 tags:
   - south-lakeland

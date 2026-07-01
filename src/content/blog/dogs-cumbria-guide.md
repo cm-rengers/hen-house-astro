@@ -2,7 +2,7 @@
 title: "Dog Friendly Walks and Pubs in the South Lakes — A Local's Guide from Old Hutton"
 description: "Living dog-friendly in the south Lakes around Old Hutton and Kendal — the walks straight from the door, the further-flung favourites, and the pubs worth driving to."
 publishDate: 2025-09-12
-heroImage: ../../assets/blog/dogs-cumbria-guide.jpg
+heroImage: ../../assets/blog/dogs-cumbria-guide.webp
 heroImageAlt: "A spaniel running across a sunlit field near Old Hutton with fell views beyond"
 tags:
   - dog-friendly
