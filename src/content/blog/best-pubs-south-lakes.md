@@ -2,8 +2,8 @@
 title: "The Best Pubs in the South Lakes and Kendal Area"
 description: "From Michelin-starred dining rooms to proper fell-walkers' locals and a brewery taproom — the best pubs within easy reach of The Hen House, tried and tested."
 publishDate: 2026-04-02
-heroImage: ../../assets/blog/best-pubs-south-lakes.webp
-heroImageAlt: "The interior of a traditional Cumbrian pub — low beams, stone walls, real ale on the bar"
+heroImage: ../../assets/blog/masons-arms-strawberry-bank-south-lakes-pub.jpg
+heroImageAlt: "The Masons Arms at Strawberry Bank with guests dining outside on the terrace"
 tags:
   - food-and-drink
   - south-lakes

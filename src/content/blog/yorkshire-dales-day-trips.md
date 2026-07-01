@@ -2,8 +2,8 @@
 title: "Yorkshire Dales Day Trips from Cumbria"
 description: "The Yorkshire Dales are on the doorstep and quieter than the Lakes — the best day trips from The Hen House into dramatic, uncrowded landscapes."
 publishDate: 2026-02-14
-heroImage: ../../assets/blog/yorkshire-dales-day-trips.webp
-heroImageAlt: "Limestone pavements above Malham with the Yorkshire Dales stretching south in morning light"
+heroImage: ../../assets/blog/kirkby-lonsdale-town-centre-yorkshire-dales-day-trip.jpg
+heroImageAlt: "Kirkby Lonsdale town centre with stone buildings, flags and visitors on a sunny day"
 tags:
   - yorkshire-dales
   - activities
