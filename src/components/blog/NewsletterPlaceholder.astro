@@ -1,0 +1,54 @@
+---
+interface Props {
+  headline?: string;
+  subheading?: string;
+}
+
+const {
+  headline = 'Escapes worth knowing about',
+  subheading = "Occasional notes on slow travel, Cumbrian life and what's on around the Lakes — straight to your inbox.",
+} = Astro.props;
+---
+
+<section class="py-16 md:py-20 bg-[#1a1a1a] text-white" aria-labelledby="newsletter-heading">
+  <div class="max-w-[640px] mx-auto px-6 md:px-10 text-center">
+    <p class="text-white/40 text-[10px] tracking-[0.2em] uppercase mb-3">
+      The Hen House Journal
+    </p>
+    <h2
+      id="newsletter-heading"
+      class="mb-4 leading-[1.1]"
+      style="
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-weight: 500;
+        font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+        letter-spacing: -0.01em;
+      "
+    >
+      {headline}
+    </h2>
+    <p class="text-white/60 mb-8 leading-relaxed" style="font-size: 0.9rem;">
+      {subheading}
+    </p>
+    <form class="flex flex-col sm:flex-row gap-3 max-w-[420px] mx-auto" aria-label="Newsletter signup" onsubmit="return false;" data-newsletter-form>
+      <label for="newsletter-email" class="sr-only">Email address</label>
+      <input
+        id="newsletter-email"
+        type="email"
+        name="email"
+        placeholder="your@email.com"
+        autocomplete="email"
+        required
+        disabled
+        class="flex-1 px-4 py-3 bg-white/10 border border-white/20 text-white placeholder-white/30 text-sm focus:outline-none focus:border-white/50 transition-colors duration-200 cursor-not-allowed"
+        aria-describedby="newsletter-note"
+      />
+      <button type="submit" disabled class="px-6 py-3 bg-white text-[#1a1a1a] text-[10px] tracking-widest uppercase opacity-50 cursor-not-allowed" aria-disabled="true">
+        Notify me
+      </button>
+    </form>
+    <p id="newsletter-note" class="mt-4 text-white/30" style="font-size: 0.7rem; letter-spacing: 0.08em;">
+      Coming soon — notifications not yet active
+    </p>
+  </div>
+</section>

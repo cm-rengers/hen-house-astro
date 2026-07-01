@@ -1,0 +1,169 @@
+---
+import { getCollection, render } from 'astro:content';
+import { getImage } from 'astro:assets';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import BlogHero from '../../components/blog/BlogHero.astro';
+import BlogCTA from '../../components/blog/BlogCTA.astro';
+import FAQAccordion from '../../components/blog/FAQAccordion.astro';
+import RelatedPosts from '../../components/blog/RelatedPosts.astro';
+import BlogSidebar from '../../components/blog/BlogSidebar.astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id.replace(/\.(md|mdx)$/, '') },
+    props: { post },
+  }));
+};
+
+function toSlug(id: string): string {
+  return id.replace(/\.(md|mdx)$/, '');
+}
+
+function estimateReadingTime(body: string): number {
+  const words = body.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const readingTime = estimateReadingTime(post.body ?? '');
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+const readingTimes = Object.fromEntries(allPosts.map((entry) => [toSlug(entry.id), estimateReadingTime(entry.body ?? '')]));
+
+const {
+  title,
+  description,
+  publishDate,
+  updatedDate,
+  heroImage,
+  heroImageAlt,
+  tags,
+  faqs,
+  canonicalUrl,
+  ogImage,
+} = post.data;
+
+const siteUrl = Astro.url.origin;
+const postUrl = canonicalUrl ?? new URL(Astro.url.pathname, Astro.url.origin).href;
+const resolvedOgImage = await getImage({
+  src: ogImage ?? heroImage,
+  width: 1200,
+  height: 630,
+  format: 'webp',
+});
+const ogImageUrl = new URL(resolvedOgImage.src, Astro.url.origin).href;
+const modifiedDate = updatedDate ?? publishDate;
+const shortTitle = title.split(':')[0].replace(/\s+[-–—]\s+.*$/, '');
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  image: ogImageUrl,
+  datePublished: publishDate.toISOString(),
+  dateModified: modifiedDate.toISOString(),
+  author: {
+    '@type': 'Organization',
+    name: 'The Hen House',
+    url: siteUrl,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'The Hen House Cumbria',
+    url: siteUrl,
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': postUrl,
+  },
+};
+
+const faqSchema = faqs?.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
+        },
+      })),
+    }
+  : null;
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${siteUrl}/blog` },
+    { '@type': 'ListItem', position: 3, name: title, item: postUrl },
+  ],
+};
+---
+
+<BaseLayout title={`${title} - The Hen House Cumbria`} description={description} ogImage={resolvedOgImage.src}>
+  <Fragment slot="head">
+    <link rel="canonical" href={postUrl} />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={postUrl} />
+    <meta property="og:image:alt" content={heroImageAlt} />
+    <meta property="article:published_time" content={publishDate.toISOString()} />
+    <meta property="article:modified_time" content={modifiedDate.toISOString()} />
+    {tags.map((tag) => <meta property="article:tag" content={tag} />)}
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  </Fragment>
+
+  <Header />
+
+  <nav aria-label="Breadcrumb" class="w-full bg-white border-t border-[#e5e2dc] border-b border-[#e5e2dc] px-6 md:px-12 lg:px-14 py-6 text-[11px] md:text-xs tracking-[0.22em] uppercase text-[#6b6b6b]">
+    <ol class="flex items-center gap-2.5 md:gap-3 flex-wrap m-0 p-0 list-none">
+      <li><a href="/" class="hover:text-[#1a1a1a] transition-colors duration-200 no-underline">Home</a></li>
+      <li aria-hidden="true" class="text-[#b8b3aa]">—</li>
+      <li><a href="/blog" class="hover:text-[#1a1a1a] transition-colors duration-200 no-underline">Journal</a></li>
+      <li aria-hidden="true" class="text-[#b8b3aa]">—</li>
+      <li aria-current="page">{shortTitle}</li>
+    </ol>
+  </nav>
+
+  <main id="main-content">
+    <BlogHero post={post} readingTime={readingTime} />
+
+    <div class="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-14 py-14 md:py-20">
+      <div class="lg:flex lg:gap-16 xl:gap-20">
+        <article class="min-w-0 flex-1">
+          <div
+            class="prose prose-lg max-w-none prose-headings:font-[Cormorant_Garamond,Georgia,serif] prose-headings:font-medium prose-headings:tracking-tight prose-headings:leading-tight prose-h2:text-[clamp(1.4rem,2.8vw,2rem)] prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-[clamp(1.1rem,2vw,1.4rem)] prose-h3:mt-8 prose-h3:mb-3 prose-p:text-[#1a1a1a] prose-p:leading-[1.8] prose-p:text-[0.95rem] prose-a:text-[#1a1a1a] prose-a:underline prose-a:decoration-[#e5e2dc] prose-a:underline-offset-2 hover:prose-a:decoration-[#1a1a1a] prose-strong:font-semibold prose-blockquote:border-l-[#e5e2dc] prose-blockquote:text-[#6b6b6b] prose-blockquote:not-italic prose-blockquote:font-normal prose-img:w-full prose-img:object-cover prose-hr:border-[#e5e2dc] prose-li:text-[#1a1a1a] prose-li:leading-[1.8] prose-li:marker:text-[#6b6b6b]"
+          >
+            <Content />
+          </div>
+
+          {faqs && faqs.length > 0 && <FAQAccordion faqs={faqs} />}
+
+          <div class="mt-12">
+            <BlogCTA
+              variant="article"
+              headline="Thinking of visiting Cumbria?"
+              subheading="Dog-friendly, EV-ready and just minutes from the M6."
+            />
+          </div>
+        </article>
+
+        <BlogSidebar allPosts={allPosts} currentSlug={toSlug(post.id)} />
+      </div>
+    </div>
+
+    <RelatedPosts currentPost={post} allPosts={allPosts} readingTimes={readingTimes} />
+    <BlogCTA />
+  </main>
+</BaseLayout>
