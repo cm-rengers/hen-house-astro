@@ -48,7 +48,8 @@ const {
 } = post.data;
 
 const siteUrl = Astro.url.origin;
-const postUrl = canonicalUrl ?? new URL(Astro.url.pathname, Astro.url.origin).href;
+const canonicalPath = `/blog/${toSlug(post.id)}/`;
+const postUrl = canonicalUrl ?? new URL(canonicalPath, Astro.url.origin).href;
 const resolvedOgImage = await getImage({
   src: ogImage ?? heroImage,
   width: 1200,
@@ -103,7 +104,7 @@ const breadcrumbSchema = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${siteUrl}/blog` },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${siteUrl}/blog/` },
     { '@type': 'ListItem', position: 3, name: title, item: postUrl },
   ],
 };
@@ -130,7 +131,7 @@ const breadcrumbSchema = {
     <ol class="flex items-center gap-2.5 md:gap-3 flex-wrap m-0 p-0 list-none">
       <li><a href="/" class="hover:text-[#1a1a1a] transition-colors duration-200 no-underline">Home</a></li>
       <li aria-hidden="true" class="text-[#b8b3aa]">—</li>
-      <li><a href="/blog" class="hover:text-[#1a1a1a] transition-colors duration-200 no-underline">Journal</a></li>
+      <li><a href="/blog" class="hover:text-[#1a1a1a] transition-colors duration-200 no-underline">Blog</a></li>
       <li aria-hidden="true" class="text-[#b8b3aa]">—</li>
       <li aria-current="page">{shortTitle}</li>
     </ol>
