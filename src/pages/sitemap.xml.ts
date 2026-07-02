@@ -4,16 +4,35 @@ import { getCollection } from 'astro:content';
 export const GET: APIRoute = async ({ site }) => {
   const siteUrl = site?.toString().replace(/\/$/, '') ?? 'https://thehenhousecumbria.co.uk';
   const toSlug = (id: string) => id.replace(/\.(md|mdx)$/, '');
+  const formatDate = (date: Date) => date.toISOString().split('T')[0];
+  const escapeXml = (value: string) =>
+    value
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
   const posts = (await getCollection('blog'))
     .filter((post) => !post.data.draft)
     .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+  const latestPostDate = posts[0]
+    ? posts.reduce((latest, post) => {
+        const postDate = post.data.updatedDate ?? post.data.publishDate;
+        return postDate > latest ? postDate : latest;
+      }, posts[0].data.updatedDate ?? posts[0].data.publishDate)
+    : undefined;
 
   const pages = [
-    { url: siteUrl, priority: '1.0', changefreq: 'monthly' },
-    { url: `${siteUrl}/blog`, priority: '0.9', changefreq: 'weekly' },
+    { url: `${siteUrl}/`, priority: '1.0', changefreq: 'monthly' },
+    {
+      url: `${siteUrl}/blog/`,
+      lastmod: latestPostDate ? formatDate(latestPostDate) : undefined,
+      priority: '0.9',
+      changefreq: 'weekly',
+    },
     ...posts.map((post) => ({
-      url: `${siteUrl}/blog/${toSlug(post.id)}`,
-      lastmod: (post.data.updatedDate ?? post.data.publishDate).toISOString().split('T')[0],
+      url: `${siteUrl}/blog/${toSlug(post.id)}/`,
+      lastmod: formatDate(post.data.updatedDate ?? post.data.publishDate),
       priority: '0.8',
       changefreq: 'monthly',
     })),
@@ -25,7 +44,7 @@ export const GET: APIRoute = async ({ site }) => {
 ${pages
   .map(
     (page) => `  <url>
-    <loc>${page.url}</loc>${page.lastmod ? `\n    <lastmod>${page.lastmod}</lastmod>` : ''}
+    <loc>${escapeXml(page.url)}</loc>${page.lastmod ? `\n    <lastmod>${page.lastmod}</lastmod>` : ''}
     <changefreq>${page.changefreq}</changefreq>
     <priority>${page.priority}</priority>
   </url>`,
